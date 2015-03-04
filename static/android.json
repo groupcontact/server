@@ -1,0 +1,21 @@
+{
+    "version": "1.0.0",
+    "userDetail": {
+        "fields": [{
+            "name": "phone",
+            "icon": "",
+            "label": "",
+            "intent": ""
+        }, {
+            "name": "qq",
+            "icon": "",
+            "label": "${qq}",
+            "intent": ""
+        }, {
+            "name": "email",
+            "icon": "",
+            "label": "${email}",
+            "intent": ""
+        }]
+    }
+}
