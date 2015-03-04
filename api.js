@@ -18,7 +18,7 @@ router.get("/", function(req, res) {
 router.get("/listGroup", function(req, res) {
     var uid = req.query.uid;
     var sql = "SELECT * FROM `group` AS g WHERE EXISTS (" +
-        "SELECT * FROM `usergroup` AS ug WHERE ug.uid='" +
+        "SELECT * FROM `usergroup` AS ug WHERE ug.uid = '" +
         uid + "' AND ug.gid = g.id)";
     db.query(sql, function(err, rows, fields) {
         res.json(rows);
@@ -32,7 +32,7 @@ router.get("/listGroup", function(req, res) {
 router.get("/listUser", function(req, res) {
     var gid = req.query.gid;
     var sql = "SELECT * FROM `user` AS u WHERE EXISTS (" +
-        "SELECT * FROM `usergroup` AS ug WHERE ug.gid='" +
+        "SELECT * FROM `usergroup` AS ug WHERE ug.gid = '" +
         gid + "' AND ug.uid = u.id)";
     db.query(sql, function(err, rows, fields) {
         res.json(rows);
@@ -48,6 +48,7 @@ router.get("/listUser", function(req, res) {
 router.post("/register", function(req, res) {
     var name = req.body.name;
     var phone = req.body.phone;
+
     // 先检查一下是否存在
     var sql = "SELECT * FROM `user` WHERE name = '" + name +
         "' AND phone = '" + phone + "'";
@@ -78,8 +79,48 @@ router.post("/update", function(req, res) {
 
     var sql = "UPDATE `user` SET phone = '" + phone + "' WHERE id = '" +
         uid + "' AND name = '" + name + "'";
-
     db.query(sql, function(err, result) {
+        // 更新成功
+        if (result.affectedRows === 1) {
+            res.json({status: 0});
+        } else {
+            res.json({status: -1});
+        }
+    });
+});
+
+/*
+ * 加入某个组
+ *
+ */
+router.post("/join", function(req, res) {
+    var uid = req.body.uid;
+    var gid = req.body.gid;
+
+    var sql = "INSERT INTO `usergroup` (`uid`, `gid`) VALUES ('" +
+        uid + "', '" + gid + "')";
+    db.query(sql, function(err, result) {
+        // 加入成功
+        if (result.affectedRows === 1) {
+            res.json({status: 0});
+        } else {
+            res.json({status: -1});
+        }
+    });
+});
+
+/*
+ * 离开某个组
+ *
+ */
+router.post("/leave", function(req, res) {
+    var uid = req.body.uid;
+    var gid = req.body.gid;
+
+    var sql = "DELETE FROM `usergroup` WHERE uid = '" +
+        uid + "' AND gid = '" + gid + "'";
+    db.query(sql, function(err, result) {
+        // 离开成功
         if (result.affectedRows === 1) {
             res.json({status: 0});
         } else {
