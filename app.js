@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // app.use(multer());
 
 // 静态文件
-app.use(express.static("static"));
+app.use(express.static("public"));
 
 // 首页路由
 var home = require("./home");
