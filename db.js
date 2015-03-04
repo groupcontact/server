@@ -18,6 +18,7 @@ db.query = function(sql, cb) {
     var connection = mysql.createConnection(conf);
     connection.connect();
     connection.query(sql, cb);
+    connection.end();
 };
 
 module.exports = db;
