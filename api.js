@@ -17,7 +17,7 @@ router.get("/", function(req, res) {
  */
 router.get("/listGroup", function(req, res) {
     var uid = req.query.uid;
-    var sql = "SELECT * FROM `group` AS g WHERE EXISTS (" +
+    var sql = "SELECT `name`, `desc` FROM `group` AS g WHERE EXISTS (" +
         "SELECT * FROM `usergroup` AS ug WHERE ug.uid = '" +
         uid + "' AND ug.gid = g.id)";
     db.query(sql, function(err, rows, fields) {
