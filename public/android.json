@@ -1,5 +1,6 @@
 {
     "version": "1.0.0",
+    "baseUrl": "http://groupcontact.duapp.com/api/",
     "userDetail": {
         "fields": [{
             "name": "phone",
