@@ -8,7 +8,7 @@ var db = require("./db");
  *
  */
 router.get("/", function(req, res) {
-    res.render('api/index');
+    res.render('api/index', {title: "群通讯录 - API文档"});
 });
 
 /*

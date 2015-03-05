@@ -1,6 +1,13 @@
-doctype html
-html
-    head
-        title 群通讯录 - API文档
-    body
+extends ../layout.jade
+block content
+    //- 加载CSS
+    link(rel="stylesheet" type="text/css" href="/static/styles/api.css")
+    #content
         h1 API文档
+        
+        div 
+            p 考虑到本项目缺乏人手，并且我自己也没有相应的条件进行ios客户端开发，同时也为了项目后续维护，故在此记下文档。
+        
+        //- 引入API文档
+        include:markdown api.md
+        
