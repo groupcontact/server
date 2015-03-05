@@ -8,7 +8,7 @@ var db = require("./db");
  *
  */
 router.get("/", function(req, res) {
-    res.send("API首页");
+    res.render('api/index');
 });
 
 /*
