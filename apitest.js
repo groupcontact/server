@@ -5,3 +5,5 @@ var router = express.Router();
 router.get("/createGroup", function(req, res) {
     res.render("apitest/createGroup", {title: "群通讯录 - 创建群组"});
 });
+
+module.exports = router;
