@@ -87,12 +87,16 @@ router.post("/createUser", function(req, res) {
     var phone = req.body.phone;
 
     // 先检查一下是否存在
-    var sql = "SELECT * FROM `user` WHERE name = '" + name +
+    var sql = "SELECT COUNT(*) AS c FROM `user` WHERE name = '" + name +
         "' AND phone = '" + phone + "'";
     db.query(sql, function(err, rows, fields) {
         // 已存在
-        if (rows.length === 1) {
-            res.json({id: rows[0].id});
+        if (rows[0].c === 1) {
+            sql = "SELECT id FROM `user` WHERE name = '" + name +
+                "' AND phone = '" + phone + "'";
+            db.query(sql, function(err, rows, fields) {
+                res.json({id: rows[0].id});
+            });
         } else {
             sql = "INSERT INTO `user` (`name`, `phone`) VALUES ('" +
                 name + "', '" + phone + "')";
