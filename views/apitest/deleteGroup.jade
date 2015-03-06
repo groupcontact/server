@@ -22,7 +22,7 @@ block content
         $("#loading").hide();
         
         $("#createUser").click(function() {
-            $(button).prop("disabled", true);
+            $("button").prop("disabled", true);
             $("#loading").show();
             var data = $('form').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -31,6 +31,6 @@ block content
             $.post("/api/createUser", data, function(response) {
                 $(".response code").text(response);
                 $("#loading").hide();
-                $(button).prop("disabled", false);
+                $("button").prop("disabled", false);
             });
         });

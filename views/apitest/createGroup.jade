@@ -42,7 +42,7 @@ block content
                 return obj;
             }, {});
             $.post("/api/createGroup", data, function(response) {
-                $(".response code").text(response);
+                $(".response code").text(JSON.strinify(response));
                 $("#loading").hide();
                 $("button").prop("disabled", false);
             });
