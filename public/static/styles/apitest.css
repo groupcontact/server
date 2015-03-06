@@ -1,4 +1,4 @@
-h1, form {
+h1, form, div {
     width: 400px;
     margin: 20px auto;
 }
@@ -13,4 +13,8 @@ textarea {
 
 .form-control {
     padding: 6px 6px;
+}
+
+#loading {
+    margin-left: 10px;
 }
