@@ -22,7 +22,7 @@ router.post("/createGroup", function(req, res) {
     var modifyToken = req.body.modifyToken;
 
     var sql = "INSERT INTO `group` (`name`, `desc`, `access_token`, `modify_token`) VALUES ('" +
-        name + "', '" + desc + "', SHA1('" + accessToken + "', SHA1('" + modifyToken + "')))";
+        name + "', '" + desc + "', SHA1('" + accessToken + "'), SHA1('" + modifyToken + "'))";
     db.query(sql, function(err, result) {
         res.json({id: result.insertId});
     });
