@@ -16,9 +16,21 @@ block content
             input.form-control(name="uid" type="text" placeholder="用户ID")
         
         button(class="btn btn-primary btn-danger" type="button" id="leaveGroup") 离开
-        
+        img(src="https://s.tbcdn.cn/g/tb/login/0.2.1/images/loading.gif" id="loading")
     
     script.
-        $("#leaveGroup").click(function() {
-            alert("Clicked");
+        $("#loading").hide();
+        
+        $("#createUser").click(function() {
+            $("button").prop("disabled", true);
+            $("#loading").show();
+            var data = $('form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.post("/api/createUser", data, function(response) {
+                $(".response code").text(response);
+                $("#loading").hide();
+                $("button").prop("disabled", false);
+            });
         });

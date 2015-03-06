@@ -16,9 +16,21 @@ block content
             input.form-control(name="modifyToken" type="password" placeholder="写密码")
         
         button(class="btn btn-primary btn-danger" type="button" id="deleteGroup") 删除
-        
+        img(src="https://s.tbcdn.cn/g/tb/login/0.2.1/images/loading.gif" id="loading")
     
     script.
-        $("#deleteGroup").click(function() {
-            alert("Clicked");
+        $("#loading").hide();
+        
+        $("#createUser").click(function() {
+            $(button).prop("disabled", true);
+            $("#loading").show();
+            var data = $('form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.post("/api/createUser", data, function(response) {
+                $(".response code").text(response);
+                $("#loading").hide();
+                $(button).prop("disabled", false);
+            });
         });

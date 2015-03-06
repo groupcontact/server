@@ -20,9 +20,21 @@ block content
             input.form-control(name="accessToken" type="password" placeholder="读密码")
         
         button(class="btn btn-primary" type="button" id="joinGroup") 加入
-        
+        img(src="https://s.tbcdn.cn/g/tb/login/0.2.1/images/loading.gif" id="loading")
     
     script.
-        $("#joinGroup").click(function() {
-            alert("Clicked");
+        $("#loading").hide();
+        
+        $("#createUser").click(function() {
+            $("button").prop("disabled", true);
+            $("#loading").show();
+            var data = $('form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.post("/api/createUser", data, function(response) {
+                $(".response code").text(response);
+                $("#loading").hide();
+                $("button").prop("disabled", false);
+            });
         });
