@@ -35,6 +35,16 @@ router.post("/createGroup", function(req, res) {
 router.post("/deleteGroup", function(req, res) {
     var gid = req.body.gid;
     var modifyToken = req.body.modifyToken;
+
+    var sql = "DELETE FROM `group` WHERE id = '" + gid +
+        "' AND modify_token = SHA1('" + modifyToken + "')";
+    db.query(sql, function(err, result) {
+        if (result.affectedRows === 1) {
+            res.json({status: 0});
+        } else {
+            res.json({status: -1});
+        }
+    });
 });
 
 
@@ -67,12 +77,12 @@ router.get("/listUser", function(req, res) {
 });
 
 /*
- * 注册用户:
+ * 创建用户:
  *
  * 若姓名和电话号码对已存在，则覆盖，否则创建新记录
  *
  */
-router.post("/register", function(req, res) {
+router.post("/createUser", function(req, res) {
     var name = req.body.name;
     var phone = req.body.phone;
 
@@ -94,12 +104,12 @@ router.post("/register", function(req, res) {
 });
 
 /*
- * 更新个人信息
+ * 编辑个人信息
  *
  * 为了简单起见, 使用全量更新(除名称外)
  *
  */
-router.post("/update", function(req, res) {
+router.post("/editUser", function(req, res) {
     var phone = req.body.phone;
     var uid = req.body.uid;
     var name = req.body.name;
@@ -120,18 +130,29 @@ router.post("/update", function(req, res) {
  * 加入某个组
  *
  */
-router.post("/join", function(req, res) {
+router.post("/joinGroup", function(req, res) {
     var uid = req.body.uid;
     var gid = req.body.gid;
+    var accessToken = req.body.accessToken;
 
-    var sql = "INSERT INTO `usergroup` (`uid`, `gid`) VALUES ('" +
-        uid + "', '" + gid + "')";
-    db.query(sql, function(err, result) {
-        // 加入成功
-        if (result.affectedRows === 1) {
-            res.json({status: 0});
-        } else {
+    // 检查访问密码是否正确
+    var sql = "SELECT COUNT(*) AS c FROM `group` WHERE id = '" + gid +
+        "' AND access_token = SHA1('" + accessToken + "')";
+    db.query(sql, function(err, rows, fields) {
+        if (rows[0].c !== 1) {
             res.json({status: -1});
+        } else {
+            // 插入新记录
+            sql = "INSERT INTO `usergroup` (`uid`, `gid`) VALUES ('" +
+                uid + "', '" + gid + "')";
+            db.query(sql, function(err, result) {
+                // 加入成功
+                if (result.affectedRows === 1) {
+                    res.json({status: 0});
+                } else {
+                    res.json({status: -1});
+                }
+            });
         }
     });
 });
@@ -140,7 +161,7 @@ router.post("/join", function(req, res) {
  * 离开某个组
  *
  */
-router.post("/leave", function(req, res) {
+router.post("/leaveGroup", function(req, res) {
     var uid = req.body.uid;
     var gid = req.body.gid;
 
