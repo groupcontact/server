@@ -21,15 +21,15 @@ block content
     script.
         $("#loading").hide();
         
-        $("#createUser").click(function() {
+        $("#deleteGroup").click(function() {
             $("button").prop("disabled", true);
             $("#loading").show();
             var data = $('form').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-            $.post("/api/createUser", data, function(response) {
-                $(".response code").text(response);
+            $.post("/api/deleteGroup", data, function(response) {
+                $(".response code").text(JSON.stringify(response));
                 $("#loading").hide();
                 $("button").prop("disabled", false);
             });
