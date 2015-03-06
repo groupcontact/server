@@ -93,7 +93,7 @@ get请求至:
     }
 ]</code></pre>
 
-**测试地址**: [/aptest/listGroup](/apitest/listGroup)
+**测试地址**: [/apitest/listGroup](/apitest/listGroup)
 
 <h3 id="listUser">查询组内所有用户</h3>
 
@@ -116,7 +116,7 @@ get请求至:
     }
 ]</code></pre>
 
-**测试地址**: [/aptest/listUser](/apitest/listUser)
+**测试地址**: [/apitest/listUser](/apitest/listUser)
 
 <h3 id="editUser">更新个人信息</h3>
 
