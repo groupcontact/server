@@ -1,6 +1,11 @@
 var mysql = require("mysql");
 
 var conf = {
+    // test
+    // host: "192.168.56.101",
+    // port: "3306",
+    // user: "root",
+    // password: "123456",
     host: "sqld.duapp.com",
     port: "4050",
     user: "4cdMnbk1AyzNajowgmyHPb5U",
