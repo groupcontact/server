@@ -8,8 +8,9 @@
 6.  [更新个人信息](#editUser)
 7.  [加入某个组](#joinGroup)
 8.  [离开某个组](#leaveGroup)
+9.  [搜索群组](#searchGroup)
 
-<h3 id="createGroup">创建群组</h3>
+<h3 id="createGroup">1. 创建群组</h3>
 
 post请求至:
 
@@ -32,7 +33,7 @@ post请求至:
 
 **测试地址**: [/apitest/createGroup](/apitest/createGroup)
 
-<h3 id="deleteGroup">删除群组</h3>
+<h3 id="deleteGroup">2. 删除群组</h3>
 
 post请求至:
 
@@ -52,7 +53,7 @@ post请求至:
 
 **测试地址**: [/apitest/deleteGroup](/apitest/deleteGroup)
 
-<h3 id="createUser">注册用户</h3>
+<h3 id="createUser">3. 注册用户</h3>
 
 post请求至:
 
@@ -77,7 +78,7 @@ post请求至:
 
 **测试地址**: [apitest/createUser](/apitest/createUser)
 
-<h3 id="listGroup">查询用户加入的组</h3>
+<h3 id="listGroup">4. 查询用户加入的组</h3>
 
 get请求至:
 
@@ -99,7 +100,7 @@ get请求至:
 
 **测试地址**: [/apitest/listGroup](/apitest/listGroup)
 
-<h3 id="listUser">查询组内所有用户</h3>
+<h3 id="listUser">5. 查询组内所有用户</h3>
 
 get请求至:
 
@@ -122,7 +123,7 @@ get请求至:
 
 **测试地址**: [/apitest/listUser](/apitest/listUser)
 
-<h3 id="editUser">更新个人信息</h3>
+<h3 id="editUser">6. 更新个人信息</h3>
 
 post请求至:
 
@@ -143,7 +144,7 @@ post请求至:
 
 **测试地址**: [/apitest/editUser](/apitest/editUser)
 
-<h3 id="joinGroup">加入某个群组</h3>
+<h3 id="joinGroup">7. 加入某个群组</h3>
 
 post请求至:
 
@@ -164,7 +165,7 @@ post请求至:
 
 **测试地址**: [/apitest/joinGroup](/apitest/joinGroup)
 
-<h3 id="leaveGroup">离开某个群组</h3>
+<h3 id="leaveGroup">8. 离开某个群组</h3>
 
 post请求至:
 
@@ -183,3 +184,25 @@ post请求至:
 }</code></pre>
 
 **测试地址**: [/apitest/leaveGroup](/apitest/leaveGroup)
+
+<h3 id="searchGroup">9. 搜索群组</h3>
+
+get请求至:
+
+<pre><code>/api/searchGroup</code></pre>
+
+**参数**:
+
+*   `name`: 群组名称
+
+**返回结果**:
+
+<pre><code>[
+    {
+        id: "",
+        name: "",
+        desc: ""
+    }
+]</code></pre>
+
+**测试地址**: [/apitest/searchGroup](/apitest/searchGroup)
