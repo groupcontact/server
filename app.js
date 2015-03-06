@@ -28,6 +28,6 @@ app.use("/api", api);
 
 // API测试路由
 var apitest = require("./apitest");
-app.use("/apitest", apietst);
+app.use("/apitest", apitest);
 
 var server = app.listen(port);
