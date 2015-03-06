@@ -41,4 +41,9 @@ router.get("/leaveGroup", function(req, res) {
     res.render("apitest/leaveGroup", {title: "群通讯录 - 退出群组"});
 });
 
+// 测试搜索群组
+router.get("/searchGroup", function(req, res) {
+    res.render("apitest/searchGroup", {title: "群通讯录 - 搜索群组"});
+});
+
 module.exports = router;

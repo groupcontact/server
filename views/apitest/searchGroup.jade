@@ -1,0 +1,37 @@
+extends ../layout.jade
+
+block content
+
+    link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
+
+    h1 搜索群组
+
+    form
+        .form-group
+            label 群组名称:
+            input.form-control(name="name" type="text" placeholder="群组名称")
+        
+        button(class="btn btn-primary" type="button" id="searchGroup") 搜索
+        img(src="https://s.tbcdn.cn/g/tb/login/0.2.1/images/loading.gif" id="loading")
+
+    .response
+        h3 响应
+        pre
+            code {}
+                        
+    script.
+        $("#loading").hide();
+        
+        $("#searchGroup").click(function() {
+            $("button").prop("disabled", true);
+            $("#loading").show();
+            var data = $('form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.get("/api/searchGroup", data, function(response) {
+                $(".response code").text(JSON.stringify(response));
+                $("#loading").hide();
+                $("button").prop("disabled", false);
+            });
+        });
