@@ -15,15 +15,15 @@ var conf = {
 
 var db = {};
 
+var connection = mysql.createConnection(conf);
+connection.connect();
+
 /*
  * 执行一条SQL语句
  *
  */
 db.query = function(sql, cb) {
-    var connection = mysql.createConnection(conf);
-    connection.connect();
     connection.query(sql, cb);
-    connection.end();
 };
 
 module.exports = db;
