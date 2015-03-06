@@ -1,0 +1,41 @@
+extends ../layout.jade
+
+block content
+
+    link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
+
+    h1 列举用户
+
+    form
+        .form-group
+            label 群组ID:
+            input.form-control(name="gid" type="text" placeholder="群组ID")
+            
+        .form-group
+            label 读密码:
+            input.form-control(name="accessToken" type="password" placeholder="读密码")
+        
+        button(class="btn btn-primary" type="button" id="listUser") 查询
+        img(src="https://s.tbcdn.cn/g/tb/login/0.2.1/images/loading.gif" id="loading")
+
+    .response
+        h3 响应
+        pre
+            code {}
+                        
+    script.
+        $("#loading").hide();
+        
+        $("#listUser").click(function() {
+            $("button").prop("disabled", true);
+            $("#loading").show();
+            var data = $('form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.get("/api/listUser", data, function(response) {
+                $(".response code").text(JSON.stringify(response));
+                $("#loading").hide();
+                $("button").prop("disabled", false);
+            });
+        });

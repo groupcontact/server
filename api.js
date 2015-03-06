@@ -54,7 +54,7 @@ router.post("/deleteGroup", function(req, res) {
  */
 router.get("/listGroup", function(req, res) {
     var uid = req.query.uid;
-    var sql = "SELECT `name`, `desc` FROM `group` AS g WHERE EXISTS (" +
+    var sql = "SELECT `id`, `name`, `desc` FROM `group` AS g WHERE EXISTS (" +
         "SELECT * FROM `usergroup` AS ug WHERE ug.uid = '" +
         uid + "' AND ug.gid = g.id)";
     db.query(sql, function(err, rows, fields) {
@@ -68,11 +68,22 @@ router.get("/listGroup", function(req, res) {
  */
 router.get("/listUser", function(req, res) {
     var gid = req.query.gid;
-    var sql = "SELECT * FROM `user` AS u WHERE EXISTS (" +
-        "SELECT * FROM `usergroup` AS ug WHERE ug.gid = '" +
-        gid + "' AND ug.uid = u.id)";
+    var accessToken = req.query.accessToken;
+
+    // 检查访问密码是否正确
+    var sql = "SELECT COUNT(*) AS c FROM `group` WHERE id = '" + gid +
+        "' AND access_token = SHA1('" + accessToken + "')";
     db.query(sql, function(err, rows, fields) {
-        res.json(rows);
+        if (rows[0].c !== 1) {
+            res.json([]);
+        } else {
+            sql = "SELECT * FROM `user` AS u WHERE EXISTS (" +
+                "SELECT * FROM `usergroup` AS ug WHERE ug.gid = '" +
+                gid + "' AND ug.uid = u.id)";
+            db.query(sql, function(err, rows, fields) {
+                res.json(rows);
+            });
+        }
     });
 });
 

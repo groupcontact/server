@@ -11,6 +11,16 @@ router.get("/deleteGroup", function(req, res) {
     res.render("apitest/deleteGroup", {title: "群通讯录 - 删除群组"});
 });
 
+// 测试列举加入的组
+router.get("/listGroup", function(req, res) {
+    res.render("apitest/listGroup", {title: "群通讯录 - 列举群组"});
+});
+
+// 测试列举组内的所有用户
+router.get("/listUser", function(req, res) {
+    res.render("apitest/listUser", {title: "群通讯录 - 列举用户"});
+});
+
 // 测试注册用户
 router.get("/createUser", function(req, res) {
     res.render("apitest/createUser", {title: "群通讯录 - 注册用户"});
