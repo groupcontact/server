@@ -12,6 +12,33 @@ router.get("/", function(req, res) {
 });
 
 /*
+ * 创建组
+ *
+ */
+router.post("/createGroup", function(req, res) {
+    var name = req.body.name;
+    var desc = req.body.desc;
+    var accessToken = req.body.accessToken;
+    var modifyToken = req.body.modifyToken;
+
+    var sql = "INSERT INTO `group` (`name`, `desc`, `access_token`, `modify_token`) VALUES ('" +
+        name + "', '" + desc + "', SHA1('" + accessToken + "', SHA1('" + modifyToken + "')))";
+    db.query(sql, function(err, result) {
+        res.json({id: result.insertId});
+    });
+});
+
+/*
+ * 删除组
+ *
+ */
+router.post("/deleteGroup", function(req, res) {
+    var gid = req.body.gid;
+    var modifyToken = req.body.modifyToken;
+});
+
+
+/*
  * 查询用户加入的所有组的信息
  *
  */

@@ -1,0 +1,20 @@
+extends ../layout.jade
+
+block content
+
+    form
+        input(name="name" type="text")
+        br
+        input(name="desc" type="text")
+        br
+        input(name="accessToken" type="text")
+        br
+        input(name="modifyToken" type="text")
+        
+        button(class="btn btn-primary" id="submit")
+        
+        script(type="text/javascript")
+        
+            $("#submit").click(function() {
+                alert("clicked");
+            });
