@@ -25,6 +25,8 @@ post请求至:
 **返回结果**:
 
 <pre><code>{
+    status: 0,
+    info: "",
     id: 0
 }</code></pre>
 
@@ -44,7 +46,8 @@ post请求至:
 **返回结果**:
 
 <pre><code>{
-    status: 0
+    status: 0,
+    info: ""
 }</code></pre>
 
 **测试地址**: [/apitest/deleteGroup](/apitest/deleteGroup)
@@ -64,6 +67,7 @@ post请求至:
 
 <pre><code>{
     status: 0,
+    info: "",
     id: 1
 }</code></pre>
 
@@ -133,7 +137,8 @@ post请求至:
 **返回结果**:
 
 <pre><code>{
-    status: 0
+    status: 0,
+    info: ""
 }</code></pre>
 
 **测试地址**: [/apitest/editUser](/apitest/editUser)
@@ -173,7 +178,8 @@ post请求至:
 **返回结果**:
 
 <pre><code>{
-    status: 0
+    status: 0,
+    info: ""
 }</code></pre>
 
 **测试地址**: [/apitest/leaveGroup](/apitest/leaveGroup)
