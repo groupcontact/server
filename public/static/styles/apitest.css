@@ -1,0 +1,16 @@
+h1, form {
+    width: 400px;
+    margin: 20px auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+textarea {
+    resize: none;
+}
+
+.form-control {
+    padding: 6px 6px;
+}

@@ -1,0 +1,24 @@
+extends ../layout.jade
+
+block content
+
+    link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
+
+    h1 删除群组
+
+    form
+        .form-group
+            label 群组ID:
+            input.form-control(name="name" type="text" placeholder="群组ID")
+            
+        .form-group
+            label 写密码:
+            input.form-control(name="modifyToken" type="password" placeholder="写密码")
+        
+        button(class="btn btn-primary btn-danger" type="button" id="deleteGroup") 删除
+        
+    
+    script.
+        $("#deleteGroup").click(function() {
+            alert("Clicked");
+        });

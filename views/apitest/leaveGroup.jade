@@ -1,0 +1,24 @@
+extends ../layout.jade
+
+block content
+
+    link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
+
+    h1 离开群组
+
+    form
+        .form-group
+            label 群组ID:
+            input.form-control(name="gid" type="text" placeholder="群组ID")
+        
+        .form-group
+            label 用户ID:
+            input.form-control(name="uid" type="text" placeholder="用户ID")
+        
+        button(class="btn btn-primary btn-danger" type="button" id="leaveGroup") 离开
+        
+    
+    script.
+        $("#leaveGroup").click(function() {
+            alert("Clicked");
+        });

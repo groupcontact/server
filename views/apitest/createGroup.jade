@@ -2,17 +2,38 @@ extends ../layout.jade
 
 block content
 
+    link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
+
+    h1 创建群组
+
     form
-        input(name="name" type="text")
-        br
-        input(name="desc" type="text")
-        br
-        input(name="accessToken" type="text")
-        br
-        input(name="modifyToken" type="text")
+        .form-group
+            label 群组名称:
+            input.form-control(name="name" type="text" placeholder="群组名称")
         
-        button(class="btn btn-primary" id="submit")
+        .form-group
+            label 群组描述:
+            textarea.form-control(name="desc" type="text" placeholder="群组描述")
+    
+        .form-group
+            label 读密码:
+            input.form-control(name="accessToken" type="password" placeholder="读密码")
+            
+        .form-group
+            label 写密码:
+            input.form-control(name="modifyToken" type="password" placeholder="写密码")
+        
+        button(class="btn btn-primary" type="button" id="createGroup") 创建
         
     
-    script(type="text/javascript")
-        console.log("Loaded")
+    script.
+        
+        $("#createGroup").click(function() {
+            var data = $('form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.post("/api/createGroup", data, function(response) {
+                console.log(response);
+            });
+        });

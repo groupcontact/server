@@ -1,0 +1,28 @@
+extends ../layout.jade
+
+block content
+
+    link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
+
+    h1 加入群组
+
+    form
+        .form-group
+            label 群组ID:
+            input.form-control(name="gid" type="text" placeholder="群组ID")
+        
+        .form-group
+            label 用户ID:
+            input.form-control(name="uid" type="text" placeholder="用户ID")
+    
+        .form-group
+            label 读密码:
+            input.form-control(name="accessToken" type="password" placeholder="读密码")
+        
+        button(class="btn btn-primary" type="button" id="joinGroup") 加入
+        
+    
+    script.
+        $("#joinGroup").click(function() {
+            alert("Clicked");
+        });

@@ -1,0 +1,24 @@
+extends ../layout.jade
+
+block content
+
+    link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
+
+    h1 编辑用户信息
+
+    form
+        .form-group
+            label 用户名:
+            input.form-control(name="name" type="text" placeholder="用户名称")
+        
+        .form-group
+            label 手机号码:
+            input.form-control(name="phone" type="text" placeholder="手机号码")
+        
+        button(class="btn btn-primary" type="button" id="editUser") 保存
+        
+    
+    script.
+        $("#editUser").click(function() {
+            alert("Clicked");
+        });
