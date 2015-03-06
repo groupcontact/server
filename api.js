@@ -144,7 +144,7 @@ router.post("/joinGroup", function(req, res) {
         "' AND access_token = SHA1('" + accessToken + "')";
     db.query(sql, function(err, rows, fields) {
         if (rows[0].c !== 1) {
-            res.json({status: -1});
+            res.json({status: -1, info: "Incorrect Access Token."});
         } else {
             // 插入新记录
             sql = "INSERT INTO `usergroup` (`uid`, `gid`) VALUES ('" +
@@ -154,7 +154,7 @@ router.post("/joinGroup", function(req, res) {
                 if (result.affectedRows === 1) {
                     res.json({status: 0});
                 } else {
-                    res.json({status: -1});
+                    res.json({status: -1, info: "Already Joined."});
                 }
             });
         }
