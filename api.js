@@ -67,7 +67,7 @@ router.get("/listGroup", function(req, res) {
         uid + "' AND ug.gid = g.id)";
     db.query(sql, function(err, rows, fields) {
         if (err) {
-            res.json({status: -1, info: "请稍候重试"});
+            res.json([]);
             return;
         }
         res.json(rows);
@@ -224,6 +224,24 @@ router.post("/leaveGroup", function(req, res) {
         } else {
             res.json({status: -1, info: "该用户不存在于此群组中"});
         }
+    });
+});
+
+/*
+ * 搜索群组
+ *
+ */
+router.get("/searchGroup", function(req, res) {
+    var name = req.query.name;
+
+    var sql = "SELECT `id`, `name`, `desc` FROM `group` WHERE `name` LIKE '" +
+        name + "%'";
+    db.query(sql, function(err, rows, fields) {
+        if (err) {
+            res.json([]);
+            return;
+        }
+        res.json(rows);
     });
 });
 
