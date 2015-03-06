@@ -24,7 +24,11 @@ router.post("/createGroup", function(req, res) {
     var sql = "INSERT INTO `group` (`name`, `desc`, `access_token`, `modify_token`) VALUES ('" +
         name + "', '" + desc + "', SHA1('" + accessToken + "'), SHA1('" + modifyToken + "'))";
     db.query(sql, function(err, result) {
-        res.json({id: result.insertId});
+        if (err) {
+            res.json({status: -1, info: "请稍候重试"});
+        } else {
+            res.json({status: 0, id: result.insertId});
+        }
     });
 });
 
@@ -39,10 +43,14 @@ router.post("/deleteGroup", function(req, res) {
     var sql = "DELETE FROM `group` WHERE id = '" + gid +
         "' AND modify_token = SHA1('" + modifyToken + "')";
     db.query(sql, function(err, result) {
+        if (err) {
+            res.json({status: -1, info: "请稍候重试"});
+            return;
+        }
         if (result.affectedRows === 1) {
             res.json({status: 0});
         } else {
-            res.json({status: -1});
+            res.json({status: -1, info: "该群组不存在"});
         }
     });
 });
@@ -58,6 +66,10 @@ router.get("/listGroup", function(req, res) {
         "SELECT * FROM `usergroup` AS ug WHERE ug.uid = '" +
         uid + "' AND ug.gid = g.id)";
     db.query(sql, function(err, rows, fields) {
+        if (err) {
+            res.json({status: -1, info: "请稍候重试"});
+            return;
+        }
         res.json(rows);
     });
 });
@@ -74,13 +86,16 @@ router.get("/listUser", function(req, res) {
     var sql = "SELECT COUNT(*) AS c FROM `group` WHERE id = '" + gid +
         "' AND access_token = SHA1('" + accessToken + "')";
     db.query(sql, function(err, rows, fields) {
-        if (rows[0].c !== 1) {
+        if (err || rows[0].c !== 1) {
             res.json([]);
         } else {
             sql = "SELECT * FROM `user` AS u WHERE EXISTS (" +
                 "SELECT * FROM `usergroup` AS ug WHERE ug.gid = '" +
                 gid + "' AND ug.uid = u.id)";
             db.query(sql, function(err, rows, fields) {
+                if (err) {
+                    rows = [];
+                }
                 res.json(rows);
             });
         }
@@ -101,14 +116,22 @@ router.post("/createUser", function(req, res) {
     var sql = "SELECT * FROM `user` WHERE name = '" + name +
         "' AND phone = '" + phone + "'";
     db.query(sql, function(err, rows, fields) {
+        if (err) {
+            res.json({status: -1, info: "请稍候重试"});
+            return;
+        }
         // 已存在
         if (rows.length === 1) {
-            res.json({id: rows[0].id});
+            res.json({status: 0, id: rows[0].id});
         } else {
             sql = "INSERT INTO `user` (`name`, `phone`) VALUES ('" +
                 name + "', '" + phone + "')";
             db.query(sql, function(err, result) {
-                res.json({id: result.insertId});
+                if (err) {
+                    res.json({status: -1, info: "请稍候重试"});
+                    return;
+                }
+                res.json({status: 0, id: result.insertId});
             });
         }
     });
@@ -128,11 +151,15 @@ router.post("/editUser", function(req, res) {
     var sql = "UPDATE `user` SET phone = '" + phone + "' WHERE id = '" +
         uid + "' AND name = '" + name + "'";
     db.query(sql, function(err, result) {
+        if (err) {
+            res.json({status: -1, info: "请稍候重试"});
+            return;
+        }
         // 更新成功
         if (result.affectedRows === 1) {
             res.json({status: 0});
         } else {
-            res.json({status: -1});
+            res.json({status: -1, info: "该用户不存在"});
         }
     });
 });
@@ -150,6 +177,10 @@ router.post("/joinGroup", function(req, res) {
     var sql = "SELECT COUNT(*) AS c FROM `group` WHERE id = '" + gid +
         "' AND access_token = SHA1('" + accessToken + "')";
     db.query(sql, function(err, rows, fields) {
+        if (err) {
+            res.json({status: -1, info: "请稍候重试"});
+            return;
+        }
         if (rows[0].c !== 1) {
             res.json({status: -1, info: "Incorrect Access Token."});
         } else {
@@ -157,6 +188,10 @@ router.post("/joinGroup", function(req, res) {
             sql = "INSERT INTO `usergroup` (`uid`, `gid`) VALUES ('" +
                 uid + "', '" + gid + "')";
             db.query(sql, function(err, result) {
+                if (err) {
+                    res.json({status: -1, info: "请稍候重试"});
+                    return;
+                }
                 // 加入成功
                 if (result.affectedRows === 1) {
                     res.json({status: 0});
@@ -179,11 +214,15 @@ router.post("/leaveGroup", function(req, res) {
     var sql = "DELETE FROM `usergroup` WHERE uid = '" +
         uid + "' AND gid = '" + gid + "'";
     db.query(sql, function(err, result) {
+        if (err) {
+            res.json({status: -1, info: "请稍候重试"});
+            return;
+        }
         // 离开成功
         if (result.affectedRows === 1) {
             res.json({status: 0});
         } else {
-            res.json({status: -1});
+            res.json({status: -1, info: "该用户不存在于此群组中"});
         }
     });
 });

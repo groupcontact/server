@@ -10,20 +10,28 @@ var conf = {
     port: "4050",
     user: "4cdMnbk1AyzNajowgmyHPb5U",
     password: "b2lavIVEeOcgSNgZhIOPcFsNMm5tAYjQ",
+
+    connectionLimit: 50,
     database: "OxRjSwGClcBjWeOCYdkP"
 };
 
 var db = {};
 
-var connection = mysql.createConnection(conf);
-connection.connect();
+var pool = mysql.createPool(conf);
 
 /*
  * 执行一条SQL语句
  *
  */
 db.query = function(sql, cb) {
-    connection.query(sql, cb);
+    pool.getConnection(function(err, connection) {
+        if (err) {
+            cb(err);
+        } else {
+            connection.query(sql, cb);
+            connection.release();
+        }
+    });
 };
 
 module.exports = db;
