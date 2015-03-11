@@ -253,7 +253,7 @@ router.get("/findUser", function(req, res) {
     var uid = req.query.uid;
     var name = req.query.name;
 
-    var sql = "SELECT `phone` FROM user WHERE id = '" + uid + "' AND name = '" +
+    var sql = "SELECT * FROM user WHERE id = '" + uid + "' AND name = '" +
         name + "'";
     db.query(sql, function(err, rows, fields) {
         if (err || rows.length != 1) {
