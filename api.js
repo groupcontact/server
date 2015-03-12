@@ -147,9 +147,10 @@ router.post("/editUser", function(req, res) {
     var phone = req.body.phone;
     var uid = req.body.uid;
     var name = req.body.name;
+    var ext = req.body.ext;
 
-    var sql = "UPDATE `user` SET phone = '" + phone + "' WHERE id = '" +
-        uid + "' AND name = '" + name + "'";
+    var sql = "UPDATE `user` SET phone = '" + phone + "' AND ext = '" +
+        ext + "' WHERE id = '" + uid + "' AND name = '" + name + "'";
     db.query(sql, function(err, result) {
         if (err) {
             res.json({status: -1, info: "请稍候重试"});
