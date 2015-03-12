@@ -149,7 +149,7 @@ router.post("/editUser", function(req, res) {
     var name = req.body.name;
     var ext = req.body.ext;
 
-    var sql = "UPDATE `user` SET phone = '" + phone + "' AND ext = '" +
+    var sql = "UPDATE `user` SET phone = '" + phone + "', ext = '" +
         ext + "' WHERE id = '" + uid + "' AND name = '" + name + "'";
     db.query(sql, function(err, result) {
         if (err) {
