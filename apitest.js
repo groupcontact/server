@@ -46,4 +46,24 @@ router.get("/searchGroup", function(req, res) {
     res.render("apitest/searchGroup", {title: "群通讯录 - 搜索群组"});
 });
 
+// 测试查找用户
+router.get("/findUser", function(req, res) {
+    res.render("apitest/findUser", {title: "群通讯录 - 查找用户"});
+});
+
+// 测试列举好友
+router.get("/listFriend", function(req, res) {
+    res.render("apitest/listFriend", {title: "群通讯录 - 列举好友"});
+});
+
+// 测试添加好友
+router.get("/addFriend", function(req, res) {
+    res.render("apitest/addFriend", {title: "群通讯录 - 添加好友"});
+});
+
+// 测试删除好友
+router.get("/deleteFriend", function(req, res) {
+    res.render("apitest/deleteFriend", {title: "群通讯录 - 删除好友"});
+});
+
 module.exports = router;

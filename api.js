@@ -210,21 +210,31 @@ router.post("/joinGroup", function(req, res) {
  */
 router.post("/leaveGroup", function(req, res) {
     var uid = req.body.uid;
+    var name = req.body.name;
     var gid = req.body.gid;
 
-    var sql = "DELETE FROM `usergroup` WHERE uid = '" +
-        uid + "' AND gid = '" + gid + "'";
-    db.query(sql, function(err, result) {
+    var sql = "SELECT * FROM `user` WHERE id = '" + uid + "' AND name = '" +
+        name + "'";
+    db.query(sql, function(err, rows, fields) {
         if (err) {
             res.json({status: -1, info: "请稍候重试"});
             return;
         }
-        // 离开成功
-        if (result.affectedRows === 1) {
-            res.json({status: 0});
-        } else {
-            res.json({status: -1, info: "该用户不存在于此群组中"});
+        if (rows.length != 1) {
+            res.json({status: -1, info: "该用户不存在"});
+            return;
         }
+        // do the deletion in action
+        sql = "DELETE FROM `usergroup` WHERE uid = '" +
+            uid + "' AND gid = '" + gid + "'";
+        db.query(sql, function(err, result) {
+            // 离开成功
+            if (result.affectedRows === 1) {
+                res.json({status: 0});
+            } else {
+                res.json({status: -1, info: "该用户不存在于此群组中"});
+            }
+        });
     });
 });
 
@@ -262,6 +272,106 @@ router.get("/findUser", function(req, res) {
             return;
         }
         res.json(rows);
+    });
+});
+
+/*
+ * 列举好友
+ *
+ */
+router.get("/listFriend", function(req, res) {
+    var uid = req.query.uid;
+    var name = req.query.name;
+
+    var sql = "SELECT * FROM user WHERE id = '" + uid + "' AND name = '" +
+        name + "'";
+    db.query(sql, function(err, rows, fields) {
+        if (err || rows.length != 1) {
+            res.json([]);
+            return;
+        }
+        sql = "SELECT * FROM `user` AS u WHERE EXISTS (SELECT * FROM `friend`" +
+            " AS f WHERE uid = '" + uid + "' AND u.id = g.fid)"
+        db.query(sql, function(err, rows, fields) {
+            if (err) {
+                res.json([]);
+                return;
+            }
+            res.json(rows);
+        });
+    });
+});
+
+/*
+ * 添加好友
+ *
+ */
+router.post("/addFriend", function(req, res) {
+    var uid = req.body.uid;
+    var fname = req.body.fname;
+    var fphone = req.body.fphone;
+
+    var sql = "SELECT * FROM `user` WHERE name = '" + fname + "' AND phone = '" +
+        fphone + "'";
+    db.query(sql, function(err, rows, fields) {
+        if (err) {
+            res.json({status: -1, info: "请稍后重试"});
+            return;
+        }
+        if (rows.length != 1) {
+            res.json({status: -1, info: "该用户不存在"});
+            return;
+        }
+        var fid = rows[0].id;
+        if (uid == fid) {
+            res.json({status: -1, info: "不能添加自己为好友"});
+            return;
+        }
+        sql = "INSERT INTO `friend` (`uid`, `fid`) VALUES ('" + uid + "', '" +
+            fid + "')";
+        db.query(sql, function(err, result) {
+            if (err) {
+                res.json({status: -1, info: "请稍后重试"});
+                return;
+            }
+            res.json({status: 0});
+        })
+    });
+});
+
+/*
+ * 删除好友
+ *
+ */
+router.post("/deleteFriend", function(req, res) {
+    var uid = req.body.uid;
+    var name = req.body.name;
+    var fid = req.body.fid;
+
+    var sql = "SELECT * FROM `user` WHERE id = '" + uid + "' AND name = '" +
+        name + "'";
+    db.query(sql, function(err, rows, fields) {
+        if (err) {
+            res.json({status: -1, info: "请稍后重试"});
+            return;
+        }
+        if (rows.length != 1) {
+            res.json({status: -1, info: "该用户不存在"});
+            return;
+        }
+        sql = "DELETE FROM `friend` WHERE uid = '" + uid + "' AND fid = '" +
+            fid + "'";
+        db.query(sql, function(err, result) {
+            if (err) {
+                res.json({status: -1, info: "请稍后重试"});
+                return;
+            }
+            if (result.affectedRows != 1) {
+                res.json({status: -1, info: "删除好友失败"});
+                return;
+            }
+            res.json({status: 0});
+        });
     });
 });
 
