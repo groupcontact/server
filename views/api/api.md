@@ -9,6 +9,10 @@
 7.  [加入某个组](#joinGroup)
 8.  [离开某个组](#leaveGroup)
 9.  [搜索群组](#searchGroup)
+10. [查询用户](#findUser)
+11. [列举好友](#listFriend)
+12. [添加好友](#addFriend)
+13. [删除好友](#deleteFriend)
 
 <h3 id="createGroup">1. 创建群组</h3>
 
@@ -117,7 +121,9 @@ get请求至:
     {
         id: 1,
         name: "",
-        phone: 13333333333
+        phone: 13333333333,
+        ext: ""
+
     }
 ]</code></pre>
 
@@ -134,6 +140,7 @@ post请求至:
 *   `uid`: 用户ID
 *   `name`: 用户名
 *   `phone`: 手机号
+*   `ext`: 扩展字段
 
 **返回结果**:
 
@@ -174,6 +181,7 @@ post请求至:
 **参数**:
 
 *   `uid`: 用户ID
+*   `name`: 用户名
 *   `gid`: 群组ID
 
 **返回结果**:
@@ -206,3 +214,93 @@ get请求至:
 ]</code></pre>
 
 **测试地址**: [/apitest/searchGroup](/apitest/searchGroup)
+
+<h3 id="findUser">10. 查询用户</h3>
+
+get请求至:
+
+<pre><code>/api/findUser</code></pre>
+
+**参数**:
+
+*   `uid`: 用户ID
+*   `name`: 用户名称
+
+**返回结果**:
+
+<pre><code>[
+    {
+        id: "",
+        name: "",
+        phone: ""
+        ext: ""
+    }
+]</code></pre>
+
+**测试地址**: [/apitest/findUser](/apitest/findUser)
+
+<h3 id="listFriend">11. 列举好友</h3>
+
+get请求至:
+
+<pre><code>/api/listFriend</code></pre>
+
+**参数**:
+
+*   `uid`: 用户ID
+*   `name`: 用户名称
+
+**返回结果**:
+
+<pre><code>[
+    {
+        id: "",
+        name: "",
+        phone: ""
+        ext: ""
+    }
+]</code></pre>
+
+**测试地址**: [/apitest/listFriend](/apitest/listFriend)
+
+<h3 id="addFriend">12. 添加好友</h3>
+
+post请求至:
+
+<pre><code>/api/addFriend</code></pre>
+
+**参数**:
+
+*   `uid`: 用户ID
+*   `fname`: 对方用户名
+*   `fphone`: 对方手机号
+
+**返回结果**:
+
+<pre><code>{}
+    status: "",
+    info: ""
+}</code></pre>
+
+**测试地址**: [/apitest/addFriend](/apitest/addFriend)
+
+<h3 id="deleteFriend">13. 删除好友</h3>
+
+post请求至:
+
+<pre><code>/api/deleteFriend</code></pre>
+
+**参数**:
+
+*   `uid`: 用户ID
+*   `name`: 用户名
+*   `fid`: 对方用户ID
+
+**返回结果**:
+
+<pre><code>{}
+    status: "",
+    info: ""
+}</code></pre>
+
+**测试地址**: [/apitest/deleteFriend](/apitest/deleteFriend)
