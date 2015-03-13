@@ -287,14 +287,14 @@ router.get("/listFriend", function(req, res) {
         name + "'";
     db.query(sql, function(err, rows, fields) {
         if (err || rows.length != 1) {
-            res.json({status: -1});
+            res.json([]);
             return;
         }
         sql = "SELECT * FROM `user` AS u WHERE EXISTS (SELECT * FROM `friend`" +
             " AS f WHERE f.uid = '" + uid + "' AND u.id = f.fid)";
         db.query(sql, function(err, rows, fields) {
             if (err) {
-                res.json({status: -2});
+                res.json([]);
                 return;
             }
             res.json(rows);
