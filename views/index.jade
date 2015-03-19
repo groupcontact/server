@@ -3,7 +3,7 @@ block content
     #content
         #qrcode
 
-        a(class="btn btn-large btn-primary" href="http://bcs.duapp.com/distapps/GroupContact_1.0.apk" id="link")
+        a(class="btn btn-large btn-primary" href="http://bcs.duapp.com/distapps/GroupContact_1.0.apk" id="link") Android客户端下载
 
-        .script
+        script.
             new QRCode(document.getElementById("qrcode"), $("#link").attr("href"));
