@@ -21,6 +21,11 @@ router.post("/createGroup", function(req, res) {
     var accessToken = req.body.accessToken;
     var modifyToken = req.body.modifyToken;
 
+    if (!name || !desc || !accessToken || !modifyToken) {
+        res.json({status: -1, info: "参数不全"});
+        return;
+    }
+
     var sql = "INSERT INTO `group` (`name`, `desc`, `access_token`, `modify_token`) VALUES ('" +
         name + "', '" + desc + "', SHA1('" + accessToken + "'), SHA1('" + modifyToken + "'))";
     db.query(sql, function(err, result) {
@@ -39,6 +44,11 @@ router.post("/createGroup", function(req, res) {
 router.post("/deleteGroup", function(req, res) {
     var gid = req.body.gid;
     var modifyToken = req.body.modifyToken;
+
+    if (!gid || !modifyToken) {
+        res.json({status: -1, info: "参数不全"});
+        return;
+    }
 
     var sql = "DELETE FROM `group` WHERE id = '" + gid +
         "' AND modify_token = SHA1('" + modifyToken + "')";
@@ -62,6 +72,12 @@ router.post("/deleteGroup", function(req, res) {
  */
 router.get("/listGroup", function(req, res) {
     var uid = req.query.uid;
+
+    if (!uid) {
+        res.json([]);
+        return;
+    }
+
     var sql = "SELECT `id`, `name`, `desc` FROM `group` AS g WHERE EXISTS (" +
         "SELECT * FROM `usergroup` AS ug WHERE ug.uid = '" +
         uid + "' AND ug.gid = g.id)";
@@ -81,6 +97,11 @@ router.get("/listGroup", function(req, res) {
 router.get("/listUser", function(req, res) {
     var gid = req.query.gid;
     var accessToken = req.query.accessToken;
+
+    if (!gid || !accessToken) {
+        res.json([]);
+        return;
+    }
 
     // 检查访问密码是否正确
     var sql = "SELECT COUNT(*) AS c FROM `group` WHERE id = '" + gid +
@@ -111,6 +132,11 @@ router.get("/listUser", function(req, res) {
 router.post("/createUser", function(req, res) {
     var name = req.body.name;
     var phone = req.body.phone;
+
+    if (!name || !phone) {
+        res.json({status: -1, info: "参数不全"});
+        return;
+    }
 
     // 先检查一下是否存在
     var sql = "SELECT * FROM `user` WHERE name = '" + name +
@@ -149,6 +175,11 @@ router.post("/editUser", function(req, res) {
     var name = req.body.name;
     var ext = req.body.ext;
 
+    if (!uid || !phone || !name || !ext) {
+        res.json({status: -1, info: "参数不全"});
+        return;
+    }
+
     var sql = "UPDATE `user` SET phone = '" + phone + "', ext = '" +
         ext + "' WHERE id = '" + uid + "' AND name = '" + name + "'";
     db.query(sql, function(err, result) {
@@ -173,6 +204,11 @@ router.post("/joinGroup", function(req, res) {
     var uid = req.body.uid;
     var gid = req.body.gid;
     var accessToken = req.body.accessToken;
+
+    if (!uid || !gid || !accessToken) {
+        res.json({status: -1, info: "参数不全"});
+        return;
+    }
 
     // 检查访问密码是否正确
     var sql = "SELECT COUNT(*) AS c FROM `group` WHERE id = '" + gid +
@@ -213,6 +249,11 @@ router.post("/leaveGroup", function(req, res) {
     var name = req.body.name;
     var gid = req.body.gid;
 
+    if (!uid || !name || !gid) {
+        res.json({status: -1, info: "参数不全"});
+        return;
+    }
+
     var sql = "SELECT * FROM `user` WHERE id = '" + uid + "' AND name = '" +
         name + "'";
     db.query(sql, function(err, rows, fields) {
@@ -245,6 +286,11 @@ router.post("/leaveGroup", function(req, res) {
 router.get("/searchGroup", function(req, res) {
     var name = req.query.name;
 
+    if (!name) {
+        res.json([]);
+        return;
+    }
+
     var sql = "SELECT `id`, `name`, `desc` FROM `group` WHERE `name` LIKE '" +
         name + "%'";
     db.query(sql, function(err, rows, fields) {
@@ -264,6 +310,11 @@ router.get("/findUser", function(req, res) {
     var uid = req.query.uid;
     var name = req.query.name;
 
+    if (!uid || !name) {
+        res.json([]);
+        return;
+    }
+
     var sql = "SELECT * FROM user WHERE id = '" + uid + "' AND name = '" +
         name + "'";
     db.query(sql, function(err, rows, fields) {
@@ -282,6 +333,11 @@ router.get("/findUser", function(req, res) {
 router.get("/listFriend", function(req, res) {
     var uid = req.query.uid;
     var name = req.query.name;
+
+    if (!uid || !name) {
+        res.json([]);
+        return;
+    }
 
     var sql = "SELECT * FROM `user` WHERE id = '" + uid + "' AND name = '" +
         name + "'";
@@ -310,6 +366,11 @@ router.post("/addFriend", function(req, res) {
     var uid = req.body.uid;
     var fname = req.body.fname;
     var fphone = req.body.fphone;
+
+    if (!uid || !fname || !fphone) {
+        res.json({status: -1, info: "参数不全"});
+        return;
+    }
 
     var sql = "SELECT * FROM `user` WHERE name = '" + fname + "' AND phone = '" +
         fphone + "'";
@@ -347,6 +408,11 @@ router.post("/deleteFriend", function(req, res) {
     var uid = req.body.uid;
     var name = req.body.name;
     var fid = req.body.fid;
+
+    if (!uid || !name || !fid) {
+        res.json({status: -1, info: "参数不全"});
+        return;
+    }
 
     var sql = "SELECT * FROM `user` WHERE id = '" + uid + "' AND name = '" +
         name + "'";
