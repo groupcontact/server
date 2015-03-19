@@ -1,6 +1,9 @@
 extends layout.jade
 block content
     #content
-        h1 群通讯录
-        
-    
+        #qrcode
+
+        a(class="btn btn-large btn-primary" href="http://bcs.duapp.com/distapps/GroupContact_1.0.apk" id="link")
+
+        .script
+            new QRCode(document.getElementById("qrcode"), $("#link").attr("href"));
