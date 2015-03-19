@@ -6,3 +6,8 @@
 h2, h3, h4 {
     margin-bottom: 20px;
 }
+
+#qrcode {
+    width: 256px;
+    margin: 0px auto;
+}

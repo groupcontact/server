@@ -9,14 +9,13 @@ block content
 
         #qrcode
 
-        a(href="http://bcs.duapp.com/distapps/GroupContact_1.0.apk" id="link") 直接下载
-
-        script.
-            new QRCode(document.getElementById("qrcode"), $("#link").attr("href"));
-
         h3 发布日志
 
         h4 v1.0(2015.3.19)
+            a(href="http://bcs.duapp.com/distapps/GroupContact_1.0.apk" id="link") 下载
+
+        script.
+            new QRCode(document.getElementById("qrcode"), $("#link").attr("href"));
 
         ol
             li 群组搜索, 群组添加, 群组成员查看
