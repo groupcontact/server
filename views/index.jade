@@ -4,9 +4,24 @@ block content
 
         script(src="/static/scripts/qrcode.min.js")
 
+        h2 Android客户端
+
         #qrcode
 
-        a(class="btn btn-large btn-primary" href="http://bcs.duapp.com/distapps/GroupContact_1.0.apk" id="link") Android客户端下载
+        a(href="http://bcs.duapp.com/distapps/GroupContact_1.0.apk" id="link") 直接下载
 
         script.
             new QRCode(document.getElementById("qrcode"), $("#link").attr("href"));
+
+        h3 发布日志
+
+        b 1.0 2015.3.19
+
+        ol
+            li 群组搜索, 群组添加, 群组成员查看
+            li 个人信息更新
+            li 加好友
+
+        h4 iPhone客户端
+
+        敬请期待(预计发布日期2015.4)
