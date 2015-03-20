@@ -76,7 +76,31 @@ exports.checkCreateUser = function(res, name, phone) {
         return false;
     }
     if (!isPhone(phone)) {
-        error(res, "手机号码格式不正确");
+        error(res, "手机号码格式有误");
+        return false;
+    }
+    return true;
+};
+
+exports.checkEditUser = function(res, uid, name, phone, ext) {
+    if (isEmpty(uid, name, phone, ext)) {
+        error(res, "参数不全");
+        return false;
+    }
+    if (hasLeftOrRightSpace(name)) {
+        error(res, "参数前或后含有空格");
+        return false;
+    }
+    if (!hasLength(uid, 1, -1) || !allDigit(uid)) {
+        error(res, "用户ID格式有误");
+        return false;
+    }
+    if (!isPhone(phone)) {
+        error(res, "手机号码格式有误");
+        return false;
+    }
+    if (!isJSONObject(ext)) {
+        error(res, "扩展属性必须为JSON对象");
         return false;
     }
     return true;
@@ -92,6 +116,24 @@ var error = function(res, message) {
  */
 var isPhone = function(num) {
     return num.length == 11 && parseInt(num) == num;
+};
+
+var isJSON = function(str) {
+    try {
+        var obj = JSON.parse(str);
+        return !Array.isArray(obj);
+    } catch (e) {
+        return false;
+    }
+};
+
+var isJSONArray = function(str) {
+    try {
+        var obj = JSON.parse(str);
+        return Array.isArray(obj);
+    } catch (e) {
+        return false;
+    }
 };
 
 var isEmpty = function() {

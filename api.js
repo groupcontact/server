@@ -171,8 +171,7 @@ router.post("/editUser", function(req, res) {
     var name = req.body.name;
     var ext = req.body.ext;
 
-    if (!uid || !phone || !name || !ext) {
-        res.json({status: -1, info: "参数不全"});
+    if (!check.checkEditUser(uid, name, phone, ext)) {
         return;
     }
 
