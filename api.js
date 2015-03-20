@@ -381,7 +381,7 @@ router.post("/addFriend", function(req, res) {
             fid + "')";
         db.query(sql, function(err, result) {
             if (err) {
-                res.json({status: -1, info: "请稍后重试"});
+                res.json({status: -1, info: "已是您好友, 若不然请稍后重试"});
                 return;
             }
             res.json({status: 0});
