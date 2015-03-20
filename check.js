@@ -3,8 +3,8 @@ exports.checkCreateGroup = function(res, name, desc, accessToken, modifyToken) {
         error(res, "参数不全");
         return false;
     }
-    if (hasSpace(name, desc, accessToken, modifyToken)) {
-        error(res, "参数中不能含有空格");
+    if (hasLeftOrRightSpace(name, desc)) {
+        error(res, "参数前或后含有空格");
         return false;
     }
     if (!hasLength(name, 8, 20)) {
@@ -71,6 +71,10 @@ exports.checkCreateUser = function(res, name, phone) {
         error(res, "参数不全");
         return false;
     }
+    if (hasLeftOrRightSpace(name)) {
+        error(res, "参数前或后含有空格");
+        return false;
+    }
     if (!isPhone(phone)) {
         error(res, "手机号码格式不正确");
         return false;
@@ -109,6 +113,11 @@ var hasSpace = function() {
             return true;
         }
     }
+};
+
+var hasLeftOrRightSpace = function(str) {
+    var length = str.length;
+    return str[0] == ' ' || str[length - 1] == ' ';
 };
 
 var allDigit = function(str) {
