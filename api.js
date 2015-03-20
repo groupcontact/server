@@ -130,8 +130,7 @@ router.post("/createUser", function(req, res) {
     var name = req.body.name;
     var phone = req.body.phone;
 
-    if (!name || !phone) {
-        res.json({status: -1, info: "参数不全"});
+    if (!check.checkCreateUser(res, name, phone)) {
         return;
     }
 

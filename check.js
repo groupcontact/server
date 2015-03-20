@@ -66,6 +66,18 @@ exports.checkListUser = function(res, gid, accessToken) {
     return true;
 };
 
+exports.checkCreateUser = function(res, name, phone) {
+    if (isEmpty(name, phone)) {
+        error(res, "参数不全");
+        return false;
+    }
+    if (!isPhone(phone)) {
+        error(res, "手机号码格式不正确");
+        return false;
+    }
+    return true;
+};
+
 var error = function(res, message) {
     res.json({status: -1, info: message});
 };
@@ -82,6 +94,9 @@ var isEmpty = function() {
     for (var i = 0; i < arguments.length; ++i) {
         // null or undefined or ""
         if (!arguments[i]) {
+            return true;
+        }
+        if (arguments[i].trim().length == 0) {
             return true;
         }
     }
