@@ -171,7 +171,7 @@ router.post("/editUser", function(req, res) {
     var name = req.body.name;
     var ext = req.body.ext;
 
-    if (!check.checkEditUser(uid, name, phone, ext)) {
+    if (!check.checkEditUser(res, uid, name, phone, ext)) {
         return;
     }
 
