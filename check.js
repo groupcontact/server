@@ -23,7 +23,7 @@ exports.checkCreateGroup = function(res, name, desc, accessToken, modifyToken) {
 };
 
 exports.checkDeleteGroup = function(res, gid, modifyToken) {
-    if (isEmpty(name, desc, accessToken, modifyToken)) {
+    if (isEmpty(gid, modifyToken)) {
         error(res, "参数不全");
         return false;
     }
