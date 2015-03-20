@@ -118,7 +118,7 @@ var isPhone = function(num) {
     return num.length == 11 && parseInt(num) == num;
 };
 
-var isJSON = function(str) {
+var isJSONObject = function(str) {
     try {
         var obj = JSON.parse(str);
         return !Array.isArray(obj);
