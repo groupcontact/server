@@ -38,6 +38,18 @@ exports.checkDeleteGroup = function(res, gid, modifyToken) {
     return true;
 };
 
+exports.checkListGroup = function(res, uid) {
+    if (isEmpty(uid)) {
+        res.json([]);
+        return false;
+    }
+    if (!hasLength(uid, 1, -1) || !allDigit(uid)) {
+        res.json([]);
+        return false;
+    }
+    return true;
+}
+
 var error = function(res, message) {
     res.json({status: -1, info: message});
 };

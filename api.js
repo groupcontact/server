@@ -72,8 +72,7 @@ router.post("/deleteGroup", function(req, res) {
 router.get("/listGroup", function(req, res) {
     var uid = req.query.uid;
 
-    if (!uid) {
-        res.json([]);
+    if (!check.checkListGroup(res, uid)) {
         return;
     }
 
