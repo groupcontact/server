@@ -106,6 +106,46 @@ exports.checkEditUser = function(res, uid, name, phone, ext) {
     return true;
 };
 
+exports.checkJoinGroup = function(res, uid, gid, accessToken) {
+    if (isEmpty(uid, gid, accessToken)) {
+        error(res, "参数不全");
+        return false;
+    }
+    if (!hasLength(uid, 1, -1) || !allDigit(uid)) {
+        error(res, "用户ID格式有误");
+        return false;
+    }
+    if (!hasLength(gid, 1, -1) || !allDigit(gid)) {
+        error(res, "群组ID格式有误");
+        return false;
+    }
+    if (!hasLength(accessToken, 6, 6) || !allDigit(accessToken)) {
+        error(res, "访问密码只能为6位数字");
+        return false;
+    }
+    return true;
+};
+
+exports.checkLeaveGroup = function(res, uid, name, gid) {
+    if (isEmpty(uid, name, gid)) {
+        error(res, "参数不全");
+        return false;
+    }
+    if (!hasLength(uid, 1, -1) || !allDigit(uid)) {
+        error(res, "用户ID格式有误");
+        return false;
+    }
+    if (hasLeftOrRightSpace(name)) {
+        error(res, "参数前或后含有空格");
+        return false;
+    }
+    if (!hasLength(gid, 1, -1) || !allDigit(gid)) {
+        error(res, "群组ID格式有误");
+        return false;
+    }
+    return true;
+};
+
 var error = function(res, message) {
     res.json({status: -1, info: message});
 };

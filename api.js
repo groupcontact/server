@@ -200,8 +200,7 @@ router.post("/joinGroup", function(req, res) {
     var gid = req.body.gid;
     var accessToken = req.body.accessToken;
 
-    if (!uid || !gid || !accessToken) {
-        res.json({status: -1, info: "参数不全"});
+    if (!check.checkJoinGroup(res, uid, gid, accessToken)) {
         return;
     }
 
@@ -244,8 +243,7 @@ router.post("/leaveGroup", function(req, res) {
     var name = req.body.name;
     var gid = req.body.gid;
 
-    if (!uid || !name || !gid) {
-        res.json({status: -1, info: "参数不全"});
+    if (!check.checkLeaveGroup(res, uid, name, gid)) {
         return;
     }
 
