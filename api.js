@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 var db = require("./db");
+var check = require("./check");
 
 /*
  * API首页
@@ -21,8 +22,7 @@ router.post("/createGroup", function(req, res) {
     var accessToken = req.body.accessToken;
     var modifyToken = req.body.modifyToken;
 
-    if (!name || !desc || !accessToken || !modifyToken) {
-        res.json({status: -1, info: "参数不全"});
+    if (!check.checkCreateGroup(res, name, desc, accessToken, modifyToken)) {
         return;
     }
 
