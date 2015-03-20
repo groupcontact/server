@@ -45,8 +45,7 @@ router.post("/deleteGroup", function(req, res) {
     var gid = req.body.gid;
     var modifyToken = req.body.modifyToken;
 
-    if (!gid || !modifyToken) {
-        res.json({status: -1, info: "参数不全"});
+    if (!check.checkDeleteGroup(res, gid, modifyToken)) {
         return;
     }
 
