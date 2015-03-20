@@ -48,7 +48,23 @@ exports.checkListGroup = function(res, uid) {
         return false;
     }
     return true;
-}
+};
+
+exports.checkListUser = function(res, gid, accessToken) {
+    if (isEmpty(gid, accessToken)) {
+        res.json([]);
+        return false;
+    }
+    if (!hasLength(gid, 1, -1) || !allDigit(gid)) {
+        res.json([]);
+        return false;
+    }
+    if (!hasLength(accessToken, 6, 6) || !allDigit(accessToken)) {
+        res.json([]);
+        return false;
+    }
+    return true;
+};
 
 var error = function(res, message) {
     res.json({status: -1, info: message});

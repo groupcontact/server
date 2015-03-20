@@ -96,8 +96,7 @@ router.get("/listUser", function(req, res) {
     var gid = req.query.gid;
     var accessToken = req.query.accessToken;
 
-    if (!gid || !accessToken) {
-        res.json([]);
+    if (!check.checkListUser(res, gid, accessToken)) {
         return;
     }
 
