@@ -146,6 +146,86 @@ exports.checkLeaveGroup = function(res, uid, name, gid) {
     return true;
 };
 
+exports.checkSearchGroup = function(res, name) {
+    if (isEmpty(name) || hasLeftOrRightSpace(name)) {
+        res.json([]);
+        return false;
+    }
+    return true;
+};
+
+exports.checkFindUser = function(res, uid, name) {
+    if (isEmpty(uid, name)) {
+        res.json([]);
+        return false;
+    }
+    if (!hasLength(uid, 1, -1) || !allDigit(uid)) {
+        res.json([]);
+        return false;
+    }
+    if (hasLeftOrRightSpace(name)) {
+        res.json([]);
+        return false;
+    }
+    return true;
+};
+
+exports.checkListFriend = function(res, uid, name) {
+    if (isEmpty(uid, name)) {
+        res.json([]);
+        return false;
+    }
+    if (!hasLength(uid, 1, -1) || !allDigit(uid)) {
+        res.json([]);
+        return false;
+    }
+    if (hasLeftOrRightSpace(name)) {
+        res.json([]);
+        return false;
+    }
+    return true;
+};
+
+exports.checkAddFriend = function(res, uid, fname, fphone) {
+    if (isEmpty(uid, fname, fphone)) {
+        error(res, "参数不全");
+        return false;
+    }
+    if (!hasLength(uid, 1, -1) || !allDigit(uid)) {
+        error(res, "用户ID格式有误");
+        return false;
+    }
+    if (hasLeftOrRightSpace(fname)) {
+        error(res, "参数前或后含有空格");
+        return false;
+    }
+    if (!isPhone(fphone)) {
+        error(res, "手机号码格式有误");
+        return false;
+    }
+    return true;
+};
+
+exports.checkDeleteFriend = function(res, uid, name, fid) {
+    if (isEmpty(uid, name, fid)) {
+        error(res, "参数不全");
+        return false;
+    }
+    if (!hasLength(uid, 1, -1) || !allDigit(uid)) {
+        error(res, "用户ID格式有误");
+        return false;
+    }
+    if (hasLeftOrRightSpace(name)) {
+        error(res, "参数前或后含有空格");
+        return false;
+    }
+    if (!hasLength(fid, 1, -1) || !allDigit(fid)) {
+        error(res, "用户ID格式有误");
+        return false;
+    }
+    return true;
+};
+
 var error = function(res, message) {
     res.json({status: -1, info: message});
 };

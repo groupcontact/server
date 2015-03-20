@@ -279,8 +279,7 @@ router.post("/leaveGroup", function(req, res) {
 router.get("/searchGroup", function(req, res) {
     var name = req.query.name;
 
-    if (!name) {
-        res.json([]);
+    if (!check.checkSearchGroup(res, name)) {
         return;
     }
 
@@ -303,8 +302,7 @@ router.get("/findUser", function(req, res) {
     var uid = req.query.uid;
     var name = req.query.name;
 
-    if (!uid || !name) {
-        res.json([]);
+    if (!check.checkFindUser(res, uid, name)) {
         return;
     }
 
@@ -327,8 +325,7 @@ router.get("/listFriend", function(req, res) {
     var uid = req.query.uid;
     var name = req.query.name;
 
-    if (!uid || !name) {
-        res.json([]);
+    if (!check.checkListFriend(res, uid, name)) {
         return;
     }
 
@@ -360,8 +357,7 @@ router.post("/addFriend", function(req, res) {
     var fname = req.body.fname;
     var fphone = req.body.fphone;
 
-    if (!uid || !fname || !fphone) {
-        res.json({status: -1, info: "参数不全"});
+    if (!check.checkAddFriend(res, uid, fname, fphone)) {
         return;
     }
 
@@ -402,8 +398,7 @@ router.post("/deleteFriend", function(req, res) {
     var name = req.body.name;
     var fid = req.body.fid;
 
-    if (!uid || !name || !fid) {
-        res.json({status: -1, info: "参数不全"});
+    if (!check.checkDeleteFriend(res, uid, name, fid)) {
         return;
     }
 
