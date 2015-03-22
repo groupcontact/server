@@ -26,8 +26,9 @@ router.post("/createGroup", function(req, res) {
         return;
     }
 
-    var sql = "INSERT INTO `group` (`name`, `desc`, `access_token`, `modify_token`) VALUES ('" +
-        name + "', '" + desc + "', SHA1('" + accessToken + "'), SHA1('" + modifyToken + "'))";
+    var sql = "INSERT INTO `group` (`gmt_create`, `gmt_modified`, `name`, `desc`, `access_token`, " +
+        "`modify_token`) VALUES (NOW(), NOW(), '" + name + "', '" + desc + "', SHA1('" + accessToken +
+        "'), SHA1('" + modifyToken + "'))";
     db.query(sql, function(err, result) {
         if (err) {
             res.json({status: -1, info: "请稍候重试"});
@@ -146,8 +147,8 @@ router.post("/createUser", function(req, res) {
         if (rows.length === 1) {
             res.json({status: 0, id: rows[0].id});
         } else {
-            sql = "INSERT INTO `user` (`name`, `phone`) VALUES ('" +
-                name + "', '" + phone + "')";
+            sql = "INSERT INTO `user` (`gmt_create`, `gmt_modified`, `name`, `phone`)" +
+                " VALUES (NOW(), NOW(), '" + name + "', '" + phone + "')";
             db.query(sql, function(err, result) {
                 if (err) {
                     res.json({status: -1, info: "请稍候重试"});
@@ -175,7 +176,7 @@ router.post("/editUser", function(req, res) {
         return;
     }
 
-    var sql = "UPDATE `user` SET phone = '" + phone + "', ext = '" +
+    var sql = "UPDATE `user` SET gmt_modified = NOW(), phone = '" + phone + "', ext = '" +
         ext + "' WHERE id = '" + uid + "' AND name = '" + name + "'";
     db.query(sql, function(err, result) {
         if (err) {
@@ -216,8 +217,8 @@ router.post("/joinGroup", function(req, res) {
             res.json({status: -1, info: "Incorrect Access Token."});
         } else {
             // 插入新记录
-            sql = "INSERT INTO `usergroup` (`uid`, `gid`) VALUES ('" +
-                uid + "', '" + gid + "')";
+            sql = "INSERT INTO `usergroup` (`gmt_create`, `gmt_modified`, `uid`, `gid`)" +
+                " VALUES (NOW(), NOW(), '" + uid + "', '" + gid + "')";
             db.query(sql, function(err, result) {
                 if (err) {
                     res.json({status: -1, info: "请稍候重试"});
@@ -377,8 +378,8 @@ router.post("/addFriend", function(req, res) {
             res.json({status: -1, info: "不能添加自己为好友"});
             return;
         }
-        sql = "INSERT INTO `friend` (`uid`, `fid`) VALUES ('" + uid + "', '" +
-            fid + "')";
+        sql = "INSERT INTO `friend` (`gmt_create`, `gmt_modified`, `uid`, `fid`)" +
+            " VALUES (NOW(), NOW(), '" + uid + "', '" + fid + "')";
         db.query(sql, function(err, result) {
             if (err) {
                 res.json({status: -1, info: "已是您好友, 若不然请稍后重试"});
