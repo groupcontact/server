@@ -1,22 +1,7 @@
 {
-    "version": "1.0.0",
     "baseUrl": "http://groupcontact.duapp.com/api/v1/",
-    "userDetail": {
-        "fields": [{
-            "name": "phone",
-            "icon": "",
-            "label": "",
-            "intent": ""
-        }, {
-            "name": "qq",
-            "icon": "",
-            "label": "${qq}",
-            "intent": ""
-        }, {
-            "name": "email",
-            "icon": "",
-            "label": "${email}",
-            "intent": ""
-        }]
+    "app": {
+        "code": 2,
+        "compatible": []
     }
 }
