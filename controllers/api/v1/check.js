@@ -292,7 +292,7 @@ var allDigit = function(str) {
 };
 
 var hasLength = function(str, min, max) {
-    var length = str.length;
+    var length = str.match(/[^ -~]/g) == null ? str.length : str.length + str.match(/[^ -~]/g).length;
     if (min > 0 && length < min) {
         return false;
     }
