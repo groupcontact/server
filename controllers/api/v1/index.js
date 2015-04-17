@@ -3,6 +3,9 @@ var router = express.Router();
 
 var db = require("./db");
 var check = require("./check");
+var test = require("./test");
+
+router.use("/test", test);
 
 /*
  * API首页
