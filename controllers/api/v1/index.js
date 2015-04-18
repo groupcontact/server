@@ -150,8 +150,8 @@ router.post("/createUser", function(req, res) {
         if (rows.length === 1) {
             res.json({status: 0, id: rows[0].id});
         } else {
-            sql = "INSERT INTO `user` (`gmt_create`, `gmt_modified`, `name`, `phone`)" +
-                " VALUES (NOW(), NOW(), '" + name + "', '" + phone + "')";
+            sql = "INSERT INTO `user` (`gmt_create`, `gmt_modified`, `name`, `phone`, `password`)" +
+                " VALUES (NOW(), NOW(), '" + name + "', '" + phone + "', SHA1('123456'))";
             db.query(sql, function(err, result) {
                 if (err) {
                     res.json({status: -1, info: "请稍候重试"});
