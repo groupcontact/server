@@ -21,8 +21,8 @@ function AffectedRowsCallback(cb) {
 }
 
 User.prototype.auth = function(uid, password, cb) {
-    var sql = "SELECT * FROM `user` WHERE id = '" + uid + "' AND phone = '" +
-        phone + "'";
+    var sql = "SELECT * FROM `user` WHERE id = '" + uid + "' AND password = '" +
+        password + "'";
     this.db.query(sql, new RowCountCallback(cb).callback);
 };
 

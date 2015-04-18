@@ -79,7 +79,7 @@ router.put("/:id", function(req, res) {
     };
 
     // 权限验证
-    user.auth(uid, phone, new GeneralCallback(res, function(rows) {
+    user.auth(uid, password, new GeneralCallback(res, function(rows) {
         update();
     }, "无权限").callback);
 });
