@@ -42,9 +42,7 @@ User.prototype.update = function(uid, name, phone, ext, cb) {
     var sql = "UPDATE `user` SET gmt_modified = NOW(), name = '" + name +
         "', phone = '" + phone + "', ext = '" + ext + "' WHERE id = '" +
         uid + "'";
-    this.db.query(sql, function(err, result) {
-        cb(result);
-    });
+    this.db.query(sql, new AffectedRowsCallback(cb).callback);
 };
 
 User.prototype.ERROR = ERROR;
