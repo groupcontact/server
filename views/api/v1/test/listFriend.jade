@@ -4,7 +4,7 @@ block content
 
     link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
 
-    h1 添加好友
+    h1 列举朋友
 
     form
         .form-group
@@ -12,14 +12,10 @@ block content
             input.form-control(name="uid" type="text" placeholder="用户ID")
 
         .form-group
-            label 对方用户名:
-            input.form-control(name="fname" type="text" placeholder="对方用户名")
+            label 用户名称:
+            input.form-control(name="name" type="text" placeholder="用户名称")
 
-        .form-group
-            label 对方手机号:
-            input.form-control(name="fphone" type="text" placeholder="对方手机号")
-
-        button(class="btn btn-primary" type="button" id="addFriend") 添加
+        button(class="btn btn-primary" type="button" id="listFriend") 查询
         img(src="https://s.tbcdn.cn/g/tb/login/0.2.1/images/loading.gif" id="loading")
 
     .response
@@ -30,14 +26,14 @@ block content
     script.
         $("#loading").hide();
 
-        $("#addFriend").click(function() {
+        $("#listFriend").click(function() {
             $("button").prop("disabled", true);
             $("#loading").show();
             var data = $('form').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-            $.post("/api/addFriend", data, function(response) {
+            $.get("/api/v1/listFriend", data, function(response) {
                 $(".response code").text(JSON.stringify(response));
                 $("#loading").hide();
                 $("button").prop("disabled", false);

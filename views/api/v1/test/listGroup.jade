@@ -4,18 +4,14 @@ block content
 
     link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
 
-    h1 列举朋友
+    h1 列举群组
 
     form
         .form-group
             label 用户ID:
             input.form-control(name="uid" type="text" placeholder="用户ID")
 
-        .form-group
-            label 用户名称:
-            input.form-control(name="name" type="text" placeholder="用户名称")
-
-        button(class="btn btn-primary" type="button" id="listFriend") 查询
+        button(class="btn btn-primary" type="button" id="listGroup") 查询
         img(src="https://s.tbcdn.cn/g/tb/login/0.2.1/images/loading.gif" id="loading")
 
     .response
@@ -26,14 +22,14 @@ block content
     script.
         $("#loading").hide();
 
-        $("#listFriend").click(function() {
+        $("#listGroup").click(function() {
             $("button").prop("disabled", true);
             $("#loading").show();
             var data = $('form').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-            $.get("/api/listFriend", data, function(response) {
+            $.get("/api/v1/listGroup", data, function(response) {
                 $(".response code").text(JSON.stringify(response));
                 $("#loading").hide();
                 $("button").prop("disabled", false);

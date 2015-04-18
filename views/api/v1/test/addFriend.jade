@@ -4,44 +4,40 @@ block content
 
     link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
 
-    h1 创建群组
+    h1 添加好友
 
     form
         .form-group
-            label 群组名称:
-            input.form-control(name="name" type="text" placeholder="群组名称")
-        
+            label 用户ID:
+            input.form-control(name="uid" type="text" placeholder="用户ID")
+
         .form-group
-            label 群组描述:
-            textarea.form-control(name="desc" type="text" placeholder="群组描述")
-    
+            label 对方用户名:
+            input.form-control(name="fname" type="text" placeholder="对方用户名")
+
         .form-group
-            label 读密码:
-            input.form-control(name="accessToken" type="password" placeholder="读密码")
-            
-        .form-group
-            label 写密码:
-            input.form-control(name="modifyToken" type="password" placeholder="写密码")
-        
-        button(class="btn btn-primary" type="button" id="createGroup") 创建
+            label 对方手机号:
+            input.form-control(name="fphone" type="text" placeholder="对方手机号")
+
+        button(class="btn btn-primary" type="button" id="addFriend") 添加
         img(src="https://s.tbcdn.cn/g/tb/login/0.2.1/images/loading.gif" id="loading")
-        
+
     .response
         h3 响应
         pre
             code {}
-    
+
     script.
         $("#loading").hide();
-        
-        $("#createGroup").click(function() {
+
+        $("#addFriend").click(function() {
             $("button").prop("disabled", true);
             $("#loading").show();
             var data = $('form').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-            $.post("/api/createGroup", data, function(response) {
+            $.post("/api/v1/addFriend", data, function(response) {
                 $(".response code").text(JSON.stringify(response));
                 $("#loading").hide();
                 $("button").prop("disabled", false);

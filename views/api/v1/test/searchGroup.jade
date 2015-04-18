@@ -10,7 +10,7 @@ block content
         .form-group
             label 群组名称:
             input.form-control(name="name" type="text" placeholder="群组名称")
-        
+
         button(class="btn btn-primary" type="button" id="searchGroup") 搜索
         img(src="https://s.tbcdn.cn/g/tb/login/0.2.1/images/loading.gif" id="loading")
 
@@ -18,10 +18,10 @@ block content
         h3 响应
         pre
             code {}
-                        
+
     script.
         $("#loading").hide();
-        
+
         $("#searchGroup").click(function() {
             $("button").prop("disabled", true);
             $("#loading").show();
@@ -29,7 +29,7 @@ block content
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-            $.get("/api/searchGroup", data, function(response) {
+            $.get("/api/v1/searchGroup", data, function(response) {
                 $(".response code").text(JSON.stringify(response));
                 $("#loading").hide();
                 $("button").prop("disabled", false);

@@ -4,36 +4,36 @@ block content
 
     link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
 
-    h1 删除群组
+    h1 查找用户
 
     form
         .form-group
-            label 群组ID:
-            input.form-control(name="gid" type="text" placeholder="群组ID")
-            
+            label 用户ID:
+            input.form-control(name="uid" type="text" placeholder="用户ID")
+
         .form-group
-            label 写密码:
-            input.form-control(name="modifyToken" type="password" placeholder="写密码")
-        
-        button(class="btn btn-primary btn-danger" type="button" id="deleteGroup") 删除
+            label 用户名称:
+            input.form-control(name="name" type="text" placeholder="用户名称")
+
+        button(class="btn btn-primary" type="button" id="findUser") 查询
         img(src="https://s.tbcdn.cn/g/tb/login/0.2.1/images/loading.gif" id="loading")
 
     .response
         h3 响应
         pre
-            code {}    
+            code {}
 
     script.
         $("#loading").hide();
-        
-        $("#deleteGroup").click(function() {
+
+        $("#findUser").click(function() {
             $("button").prop("disabled", true);
             $("#loading").show();
             var data = $('form').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-            $.post("/api/deleteGroup", data, function(response) {
+            $.get("/api/v1/findUser", data, function(response) {
                 $(".response code").text(JSON.stringify(response));
                 $("#loading").hide();
                 $("button").prop("disabled", false);

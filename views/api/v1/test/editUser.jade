@@ -41,7 +41,7 @@ block content
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-            $.post("/api/editUser", data, function(response) {
+            $.post("/api/v1/editUser", data, function(response) {
                 $(".response code").text(JSON.stringify(response));
                 $("#loading").hide();
                 $("button").prop("disabled", false);
