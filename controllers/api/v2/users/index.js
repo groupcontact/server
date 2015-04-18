@@ -10,15 +10,15 @@ function GeneralCallback(res, successFunc, failFunc) {
 
     this.callback = function(result) {
         if (result === user.ERROR) {
-            this.res.json({status: -1, info: "请稍后重试"});
+            res.json({status: -1, info: "请稍后重试"});
         } else if (result === user.FAILURE) {
             if (typeof(failFunc) === "string") {
-                this.res.json({status: 0, info: this.failFunc});
+                res.json({status: 0, info: failFunc});
             } else {
-                this.failFunc();
+                failFunc();
             }
         } else {
-            this.successFunc(result);
+            successFunc(result);
         }
     };
 }
@@ -28,7 +28,7 @@ router.post("/", function(req, res) {
     var phone = req.body.phone;
     var password = req.body.password;
 
-    user.exist(phone, password, new GeneralCallback(res, function(rows) {
+    user.exist(phone, new GeneralCallback(res, function(rows) {
             var shasum = crypto.createHash('sha1');
             shasum.update(password);
             if (shasum.digest("hex") === rows[0].password) {
