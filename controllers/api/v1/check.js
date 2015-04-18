@@ -226,6 +226,26 @@ exports.checkDeleteFriend = function(res, uid, name, fid) {
     return true;
 };
 
+exports.checkUpdateField = function(res, gid, meta, modifyToken) {
+    if (isEmpty(gid, meta, modifyToken)) {
+        error(res, "参数不全");
+        return false;
+    }
+    if (!hasLength(gid, 1, -1) || !allDigit(gid)) {
+        error(res, "群组ID格式有误");
+        return false;
+    }
+    if (!isJSONObject(meta)) {
+        error(res, "字段设置格式有误");
+        return false;
+    }
+    if (!hasLength(modifyToken, 1, 6) || !allDigit(modifyToken)) {
+        error(res, "管理密码格式有误");
+        return false;
+    }
+    return true;
+};
+
 var error = function(res, message) {
     res.json({status: -1, info: message});
 };

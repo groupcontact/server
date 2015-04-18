@@ -441,12 +441,12 @@ router.post("/updateField", function(req, res) {
     var modifyToken = req.body.modifyToken;
     var meta = req.body.meta;
 
-    if (!checkUpdateMeta(res, gid, modifyToken, meta)) {
+    if (!checkUpdateField(res, gid, modifyToken, meta)) {
         return;
     }
 
-    var sql = "UPDATE `group` SET `meta=`'" + meta + "' WHERE id = '" +
-        gid + "' AND modifyToken = SHA1('" + modifyToken + "')";
+    var sql = "UPDATE `group` SET `meta`='" + meta + "' WHERE `id` = '" +
+        gid + "' AND `modifyToken` = SHA1('" + modifyToken + "')";
     db.query(sql, function(err, result) {
         if (err) {
             res.json({status: -1, info: "请稍后重试"});
