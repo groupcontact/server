@@ -19,11 +19,7 @@ function GeneralCallback(res, successFunc, failFunc) {
                 failFunc();
             }
         } else {
-            if (successFunc) {
-                successFunc(result);
-            } else {
-                res.json({status: 1});
-            }
+            successFunc(result);
         }
     };
 }
@@ -44,8 +40,9 @@ router.put("/:id", function(req, res) {
 
     // 权限验证
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
-        user.update(uid, name, phone, ext, new GeneralCallback(res, null,
-            "设置用户信息失败").callback);
+        user.update(uid, name, phone, ext, new GeneralCallback(res, function(result) {
+            res.json({status: 1});
+        }, "设置用户信息失败").callback);
     }, "无权限").callback);
 });
 
