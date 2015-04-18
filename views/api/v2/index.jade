@@ -1,0 +1,9 @@
+extends /layout.jade
+block content
+    //- 加载CSS
+    link(rel="stylesheet" type="text/css" href="/static/styles/api.css")
+    #content
+        h1 API文档(第二个版本, 与第一版不兼容)
+
+        //- 引入API文档
+        include:markdown api.md
