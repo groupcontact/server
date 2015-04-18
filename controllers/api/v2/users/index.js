@@ -74,7 +74,7 @@ router.put("/:id", function(req, res) {
 
     // 实际调用更新操作
     var update = function() {
-        user.update(uid, phone, name, ext, new GeneralCallback(res, null,
+        user.update(uid, name, phone, ext, new GeneralCallback(res, null,
             "设置用户信息失败").callback);
     };
 
