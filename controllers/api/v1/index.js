@@ -463,7 +463,7 @@ router.post("/updateField", function(req, res) {
 /*
  * 更新用户在群组内的设置
  */
-router.post("updateUserInGroup", function(req, res) {
+router.post("/updateUserInGroup", function(req, res) {
     var uid = req.body.uid;
     var gid = req.body.gid;
     var ext = req.body.ext;
