@@ -20,14 +20,27 @@ function AffectedRowsCallback(cb) {
     }
 }
 
+User.prototype.auth = function(uid, password, cb) {
+    var sql = "SELECT * FROM `user` WHERE id = '" + uid + "' AND phone = '" +
+        phone + "'";
+    this.db.query(sql, new RowCountCallback(cb).callback);
+};
+
 User.prototype.exist = function(phone, cb) {
     var sql = "SELECT * FROM `user` WHERE `phone` = '" + phone + "'";
     this.db.query(sql, new RowCountCallback(cb).callback);
 };
 
 User.prototype.create = function(phone, password, cb) {
-    sql = "INSERT INTO `user` (`gmt_create`, `gmt_modified`, `phone`, `password`) " +
+    var sql = "INSERT INTO `user` (`gmt_create`, `gmt_modified`, `phone`, `password`) " +
         "VALUES (NOW(), NOW(), '" + phone + "', SHA1('" + password + "'))";
+    this.db.query(sql, new AffectedRowsCallback(cb).callback);
+};
+
+User.prototype.update = function(uid, name, phone, ext, cb) {
+    var sql = "UPDATE `user` SET gmt_modified = NOW(), name = '" + name +
+        "', phone = '" + phone + "', ext = '" + ext + "' WHERE id = '" +
+        uid + "'";
     this.db.query(sql, new AffectedRowsCallback(cb).callback);
 };
 
