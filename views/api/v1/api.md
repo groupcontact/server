@@ -14,6 +14,7 @@
 12. [添加好友](#addFriend)
 13. [删除好友](#deleteFriend)
 14. [设置群组字段](#updateField)
+15. [更新用户在群组中的信息](#updateUserInGroup)
 
 <h3 id="createGroup">1. 创建群组</h3>
 
@@ -326,3 +327,25 @@ post请求至:
 }</code></pre>
 
 **测试地址**: [/api/v1/test/updateField](/api/v1/test/updateField)
+
+<h3 id="updateUserInGroup">15. 更新用户在群组中的信息</h3>
+
+post请求至:
+
+<pre><code>/api/v1/updateUserInGroup</code></pre>
+
+**参数**:
+
+*   `uid`: 用户ID
+*   `gid`: 群组ID
+*   `ext`: 用户信息(JSON对象格式)
+*   `accessToken`: 群组的访问密码
+
+**返回结果**:
+
+<pre><code>{
+    status: "",
+    info: ""
+}</code></pre>
+
+**测试地址**: [/api/v1/test/updateUserInGroup](/api/v1/test/updateUserInGroup)

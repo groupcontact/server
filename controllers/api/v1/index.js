@@ -217,7 +217,7 @@ router.post("/joinGroup", function(req, res) {
             return;
         }
         if (rows[0].c !== 1) {
-            res.json({status: -1, info: "Incorrect Access Token."});
+            res.json({status: -1, info: "访问密码错误"});
         } else {
             // 插入新记录
             sql = "INSERT INTO `usergroup` (`gmt_create`, `gmt_modified`, `uid`, `gid`)" +
@@ -457,6 +457,46 @@ router.post("/updateField", function(req, res) {
             return;
         }
         res.json({status: 0});
+    });
+});
+
+/*
+ * 更新用户在群组内的设置
+ */
+router.post("updateUserInGroup", function(req, res) {
+    var uid = req.body.uid;
+    var gid = req.body.gid;
+    var ext = req.body.ext;
+    var accessToken = req.body.accessToken;
+
+    if (!checkUpdateUserInGroup(res, uid, gid, ext, accessToken)) {
+        return;
+    }
+
+    var sql = "SELECT * FROM `group` WHERE `id` = '" + gid +
+        "' AND `accessToken` = SHA1('" + accessToken + "')";
+    db.query(sql, function(err, rows, fields) {
+        if (err) {
+            res.json({status: -1, info: "请稍后重试"});
+            return;
+        }
+        if (rows.length !== 1) {
+            res.json({status: -1, info: "访问密码错误"});
+            return;
+        }
+        sql = "UPDATE `usergroup` SET ext = '" + ext + "' WHERE `uid` = '" +
+            uid + "' AND `gid` = '" + gid + "'";
+        db.query(sql, function(err, result) {
+            if (err) {
+                res.json({status: -1, info: "请稍后重试"});
+                return;
+            }
+            if (result.affectedRows !== 1) {
+                res.json({status: -1, info: "更新信息失败"});
+                return;
+            }
+            res.json({status: 0});
+        });
     });
 });
 

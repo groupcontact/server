@@ -239,8 +239,32 @@ exports.checkUpdateField = function(res, gid, meta, modifyToken) {
         error(res, "字段设置格式有误");
         return false;
     }
-    if (!hasLength(modifyToken, 1, 6) || !allDigit(modifyToken)) {
+    if (!hasLength(modifyToken, 6, 6) || !allDigit(modifyToken)) {
         error(res, "管理密码格式有误");
+        return false;
+    }
+    return true;
+};
+
+exports.checkUpdateUserInGroup = function(res, uid, gid, ext, accessToken) {
+    if (isEmpty(uid, gid, ext, accessToken)) {
+        error(res, "参数不全");
+        return false;
+    }
+    if (!hasLength(uid, 1, -1) || !allDigit(uid)) {
+        error(res, "用户ID格式有误");
+        return false;
+    }
+    if (!hasLength(gid, 1, -1) || !allDigit(gid)) {
+        error(res, "群组ID格式有误");
+        return false;
+    }
+    if (!hasLength(accessToken, 6, 6) || !allDigit(accessToken)) {
+        error(res, "访问密码格式有误");
+        return false;
+    }
+    if (!isJSONObject(ext)) {
+        error(res, "用户信息格式有误");
         return false;
     }
     return true;

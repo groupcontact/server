@@ -71,4 +71,9 @@ router.get("/updateField", function(req, res) {
     res.render("api/v1/test/updateField", {title: "群通讯录 - 更新群组字段"});
 });
 
+// 更新用户在群组中得字段信息
+router.get("/updateUserInGroup", function(req, res) {
+    res.render("api/v1/test/updateUserInGroup", {title: "群通讯录 - 更新用户在群组中的信息"});
+});
+
 module.exports = router;
