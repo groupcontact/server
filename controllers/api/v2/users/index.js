@@ -42,16 +42,10 @@ router.put("/:id", function(req, res) {
     var ext = req.body.ext;
     var password = req.body.password;
 
-    // 实际调用更新操作
-    var update = function() {
-        user.update(uid, name, phone, ext, new GeneralCallback(res, function(result) {
-            res.json({status: 1});
-        }, "设置用户信息失败").callback);
-    };
-
     // 权限验证
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
-        update();
+        user.update(uid, name, phone, ext, new GeneralCallback(res, null,
+            "设置用户信息失败").callback);
     }, "无权限").callback);
 });
 
