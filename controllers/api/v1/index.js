@@ -433,4 +433,31 @@ router.post("/deleteFriend", function(req, res) {
     });
 });
 
+/*
+ * 更新群组元信息
+ */
+router.post("/updateField", function(req, res) {
+    var gid = req.body.gid;
+    var modifyToken = req.body.modifyToken;
+    var meta = req.body.meta;
+
+    if (!checkUpdateMeta(res, gid, modifyToken, meta)) {
+        return;
+    }
+
+    var sql = "UPDATE `group` SET `meta=`'" + meta + "' WHERE id = '" +
+        gid + "' AND modifyToken = SHA1('" + modifyToken + "')";
+    db.query(sql, function(err, result) {
+        if (err) {
+            res.json({status: -1, info: "请稍后重试"});
+            return;
+        }
+        if (result.affectedRows != 1) {
+            res.json({status: -1, info: "更新群组字段失败"});
+            return;
+        }
+        res.json({status: 0});
+    });
+});
+
 module.exports = router;
