@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var user = require.main.require("./models").user;
+var crypto = require("crypto");
 
 function GeneralCallback(res, successFunc, failFunc) {
     this.res = res;
@@ -28,7 +29,13 @@ router.post("/", function(req, res) {
     var password = req.body.password;
 
     user.exist(phone, password, new GeneralCallback(res, function(rows) {
-            res.json({status: 1, id: rows[0].id});
+            var shasum = crypto.createHash('sha1');
+            shasum.update(password);
+            if (shasum.digest("hex") === rows[0].password) {
+                res.json({status: 1, id: rows[0].id});
+            } else {
+                res.json({status: -1, info: "密码错误"});
+            }
         }, function() {
             user.create(phone, password, new GeneralCallback(res, function(result) {
                     res.json({status: 1, id: result.insertId});
