@@ -40,7 +40,9 @@ router.put("/:id", function(req, res) {
 
     // 权限验证
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
+        console.log("Authentication Success!!!");
         user.update(uid, name, phone, ext, new GeneralCallback(res, function(result) {
+            console.log("Update Finished Successfully!!!");
             res.json({status: 1});
         }, "设置用户信息失败").callback);
     }, "无权限").callback);
