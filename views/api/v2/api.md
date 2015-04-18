@@ -25,4 +25,4 @@ post请求至:
 
 若有匹配的手机号(密码也需要正确)，则不新创建，返回的`id`为原来的用户ID。
 
-**测试地址**: [api/v2/test/createUser](/api/v1/test/createUser)
+**测试地址**: [api/v2/test/createUser](/api/v2/test/createUser)
