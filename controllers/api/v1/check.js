@@ -226,7 +226,7 @@ exports.checkDeleteFriend = function(res, uid, name, fid) {
     return true;
 };
 
-exports.checkUpdateField = function(res, gid, meta, modifyToken) {
+exports.checkUpdateField = function(res, gid, modifyToken, meta) {
     if (isEmpty(gid, meta, modifyToken)) {
         error(res, "参数不全");
         return false;
