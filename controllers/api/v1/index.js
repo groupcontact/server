@@ -441,7 +441,7 @@ router.post("/updateField", function(req, res) {
     var modifyToken = req.body.modifyToken;
     var meta = req.body.meta;
 
-    if (!checkUpdateField(res, gid, modifyToken, meta)) {
+    if (!check.checkUpdateField(res, gid, modifyToken, meta)) {
         return;
     }
 
@@ -469,7 +469,7 @@ router.post("updateUserInGroup", function(req, res) {
     var ext = req.body.ext;
     var accessToken = req.body.accessToken;
 
-    if (!checkUpdateUserInGroup(res, uid, gid, ext, accessToken)) {
+    if (!check.checkUpdateUserInGroup(res, uid, gid, ext, accessToken)) {
         return;
     }
 
