@@ -1,0 +1,41 @@
+extends /layout.jade
+
+block content
+
+    link(rel="stylesheet" type="text/css" href="/static/styles/apitest.css")
+
+    h1 创建用户
+
+    form
+        .form-group
+            label 手机号码:
+            input.form-control(name="phone" type="text" placeholder="手机号码")
+            
+        .form-group
+            label 密码:
+            input.form-control(name="password" type="password" placeholder="密码")
+
+        button(class="btn btn-primary" type="button" id="createUser") 创建
+        img(src="https://s.tbcdn.cn/g/tb/login/0.2.1/images/loading.gif" id="loading")
+
+    .response
+        h3 响应
+        pre
+            code {}
+
+    script.
+        $("#loading").hide();
+
+        $("#createUser").click(function() {
+            $("button").prop("disabled", true);
+            $("#loading").show();
+            var data = $('form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.post("/api/v2/users", data, function(response) {
+                $(".response code").text(JSON.stringify(response));
+                $("#loading").hide();
+                $("button").prop("disabled", false);
+            });
+        });
