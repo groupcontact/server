@@ -66,7 +66,7 @@ router.get("/:id", function(req, res) {
 
 // 更新用户信息
 router.put("/:id", function(req, res) {
-    var uid = req.param("id");
+    var uid = req.params.id;
     var phone = req.body.phone;
     var name = req.body.name;
     var ext = req.body.ext;
