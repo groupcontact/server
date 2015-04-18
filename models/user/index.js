@@ -15,8 +15,7 @@ function RowCountCallback(cb) {
 function AffectedRowsCallback(cb) {
     this.cb = cb;
 
-    this.calback = function(err, result) {
-        console.log(result);
+    this.callback = function(err, result) {
         cb(err ? ERROR : result.affectedRows === 0 ? FAILURE : result);
     }
 }
