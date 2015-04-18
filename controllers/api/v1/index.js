@@ -446,10 +446,10 @@ router.post("/updateField", function(req, res) {
     }
 
     var sql = "UPDATE `group` SET `gmt_modified` = NOW(), `meta` = '" + meta + "' WHERE `id` = '" +
-        gid + "' AND `modifyToken` = SHA1('" + modifyToken + "')";
+        gid + "' AND `modify_token` = SHA1('" + modifyToken + "')";
     db.query(sql, function(err, result) {
         if (err) {
-            res.json({status: -1, info: err});
+            res.json({status: -1, info: "请稍后重试"});
             return;
         }
         if (result.affectedRows != 1) {
@@ -474,7 +474,7 @@ router.post("updateUserInGroup", function(req, res) {
     }
 
     var sql = "SELECT * FROM `group` WHERE `id` = '" + gid +
-        "' AND `accessToken` = SHA1('" + accessToken + "')";
+        "' AND `access_token` = SHA1('" + accessToken + "')";
     db.query(sql, function(err, rows, fields) {
         if (err) {
             res.json({status: -1, info: "请稍后重试"});
