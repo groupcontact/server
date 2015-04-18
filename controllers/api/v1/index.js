@@ -445,7 +445,7 @@ router.post("/updateField", function(req, res) {
         return;
     }
 
-    var sql = "UPDATE `group` SET `meta`='" + meta + "' WHERE `id` = '" +
+    var sql = "UPDATE `group` SET `gmt_modified` = NOW(), `meta` = '" + meta + "' WHERE `id` = '" +
         gid + "' AND `modifyToken` = SHA1('" + modifyToken + "')";
     db.query(sql, function(err, result) {
         if (err) {
@@ -484,7 +484,7 @@ router.post("updateUserInGroup", function(req, res) {
             res.json({status: -1, info: "访问密码错误"});
             return;
         }
-        sql = "UPDATE `usergroup` SET ext = '" + ext + "' WHERE `uid` = '" +
+        sql = "UPDATE `usergroup` SET gmt_modified = NOW(), ext = '" + ext + "' WHERE `uid` = '" +
             uid + "' AND `gid` = '" + gid + "'";
         db.query(sql, function(err, result) {
             if (err) {
