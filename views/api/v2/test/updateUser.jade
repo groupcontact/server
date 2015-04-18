@@ -45,9 +45,14 @@ block content
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-            $.put("/api/v2/users/" + data.uid, data, function(response) {
-                $(".response code").text(JSON.stringify(response));
-                $("#loading").hide();
-                $("button").prop("disabled", false);
+            $.ajax({
+                url: "/api/v2/users/" + data.uid,
+                type: "PUT",
+                data: data,
+                success: function(response) {
+                    $(".response code").text(JSON.stringify(response));
+                    $("#loading").hide();
+                    $("button").prop("disabled", false);
+                }
             });
         });
