@@ -449,7 +449,7 @@ router.post("/updateField", function(req, res) {
         gid + "' AND `modifyToken` = SHA1('" + modifyToken + "')";
     db.query(sql, function(err, result) {
         if (err) {
-            res.json({status: -1, info: "请稍后重试"});
+            res.json({status: -1, info: err});
             return;
         }
         if (result.affectedRows != 1) {
