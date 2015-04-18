@@ -13,12 +13,13 @@
 11. [列举好友](#listFriend)
 12. [添加好友](#addFriend)
 13. [删除好友](#deleteFriend)
+14. [设置群组字段](#updateField)
 
 <h3 id="createGroup">1. 创建群组</h3>
 
 post请求至:
 
-<pre><code>/api/createGroup</code></pre>
+<pre><code>/api/v1/createGroup</code></pre>
 
 **参数**:
 
@@ -35,13 +36,13 @@ post请求至:
     id: 0
 }</code></pre>
 
-**测试地址**: [/apitest/createGroup](/apitest/createGroup)
+**测试地址**: [/api/v1/test/createGroup](/api/v1/test/createGroup)
 
 <h3 id="deleteGroup">2. 删除群组</h3>
 
 post请求至:
 
-<pre><code>/api/delete</code></pre>
+<pre><code>/api/v1/deleteGroup</code></pre>
 
 **参数**:
 
@@ -55,13 +56,13 @@ post请求至:
     info: ""
 }</code></pre>
 
-**测试地址**: [/apitest/deleteGroup](/apitest/deleteGroup)
+**测试地址**: [/api/v1/test/deleteGroup](/api/v1/test/deleteGroup)
 
 <h3 id="createUser">3. 注册用户</h3>
 
 post请求至:
 
-<pre><code>/api/createUser</code></pre>
+<pre><code>/api/v1/createUser</code></pre>
 
 **参数**:
 
@@ -80,13 +81,13 @@ post请求至:
 
 若有匹配的用户名与手机号，则不新创建，返回的`id`为原来的用户ID。
 
-**测试地址**: [apitest/createUser](/apitest/createUser)
+**测试地址**: [api/v1/test/createUser](/api/v1/test/createUser)
 
 <h3 id="listGroup">4. 查询用户加入的组</h3>
 
 get请求至:
 
-<pre><code>/api/listGroup</code></pre>
+<pre><code>/api/v1/listGroup</code></pre>
 
 **参数**:
 
@@ -102,13 +103,13 @@ get请求至:
     }
 ]</code></pre>
 
-**测试地址**: [/apitest/listGroup](/apitest/listGroup)
+**测试地址**: [/api/v1/test/listGroup](/api/v1/test/listGroup)
 
 <h3 id="listUser">5. 查询组内所有用户</h3>
 
 get请求至:
 
-<pre><code>/api/listUser</code></pre>
+<pre><code>/api/v1/listUser</code></pre>
 
 **参数**:
 
@@ -127,13 +128,13 @@ get请求至:
     }
 ]</code></pre>
 
-**测试地址**: [/apitest/listUser](/apitest/listUser)
+**测试地址**: [/api/v1/test/listUser](/api/v1/test/listUser)
 
 <h3 id="editUser">6. 更新个人信息</h3>
 
 post请求至:
 
-<pre><code>/api/editUser</code></pre>
+<pre><code>/api/v1/editUser</code></pre>
 
 **参数**:
 
@@ -149,13 +150,13 @@ post请求至:
     info: ""
 }</code></pre>
 
-**测试地址**: [/apitest/editUser](/apitest/editUser)
+**测试地址**: [/api/v1/test/editUser](/api/v1/test/editUser)
 
 <h3 id="joinGroup">7. 加入某个群组</h3>
 
 post请求至:
 
-<pre><code>/api/joinGroup</code></pre>
+<pre><code>/api/v1/joinGroup</code></pre>
 
 **参数**:
 
@@ -170,13 +171,13 @@ post请求至:
     info: ""
 }</code></pre>
 
-**测试地址**: [/apitest/joinGroup](/apitest/joinGroup)
+**测试地址**: [/api/v1/test/joinGroup](/api/v1/test/joinGroup)
 
 <h3 id="leaveGroup">8. 离开某个群组</h3>
 
 post请求至:
 
-<pre><code>/api/leaveGroup</code></pre>
+<pre><code>/api/v1/leaveGroup</code></pre>
 
 **参数**:
 
@@ -191,13 +192,13 @@ post请求至:
     info: ""
 }</code></pre>
 
-**测试地址**: [/apitest/leaveGroup](/apitest/leaveGroup)
+**测试地址**: [/api/v1/test/leaveGroup](/api/v1/test/leaveGroup)
 
 <h3 id="searchGroup">9. 搜索群组</h3>
 
 get请求至:
 
-<pre><code>/api/searchGroup</code></pre>
+<pre><code>/api/v1/searchGroup</code></pre>
 
 **参数**:
 
@@ -213,13 +214,13 @@ get请求至:
     }
 ]</code></pre>
 
-**测试地址**: [/apitest/searchGroup](/apitest/searchGroup)
+**测试地址**: [/api/v1/test/searchGroup](/api/v1/test/searchGroup)
 
 <h3 id="findUser">10. 查询用户</h3>
 
 get请求至:
 
-<pre><code>/api/findUser</code></pre>
+<pre><code>/api/v1/findUser</code></pre>
 
 **参数**:
 
@@ -237,13 +238,13 @@ get请求至:
     }
 ]</code></pre>
 
-**测试地址**: [/apitest/findUser](/apitest/findUser)
+**测试地址**: [/api/v1/test/findUser](/api/v1/test/findUser)
 
 <h3 id="listFriend">11. 列举好友</h3>
 
 get请求至:
 
-<pre><code>/api/listFriend</code></pre>
+<pre><code>/api/v1/listFriend</code></pre>
 
 **参数**:
 
@@ -261,13 +262,13 @@ get请求至:
     }
 ]</code></pre>
 
-**测试地址**: [/apitest/listFriend](/apitest/listFriend)
+**测试地址**: [/api/v1/test/listFriend](/api/v1/test/listFriend)
 
 <h3 id="addFriend">12. 添加好友</h3>
 
 post请求至:
 
-<pre><code>/api/addFriend</code></pre>
+<pre><code>/api/v1/addFriend</code></pre>
 
 **参数**:
 
@@ -282,13 +283,13 @@ post请求至:
     info: ""
 }</code></pre>
 
-**测试地址**: [/apitest/addFriend](/apitest/addFriend)
+**测试地址**: [/api/v1/test/addFriend](/api/v1/test/addFriend)
 
 <h3 id="deleteFriend">13. 删除好友</h3>
 
 post请求至:
 
-<pre><code>/api/deleteFriend</code></pre>
+<pre><code>/api/v1/deleteFriend</code></pre>
 
 **参数**:
 
@@ -303,4 +304,25 @@ post请求至:
     info: ""
 }</code></pre>
 
-**测试地址**: [/apitest/deleteFriend](/apitest/deleteFriend)
+**测试地址**: [/api/v1/test/deleteFriend](/api/v1/test/deleteFriend)
+
+<h3 id="updateField">14. 设置群组字段</h3>
+
+post请求至:
+
+<pre><code>/api/v1/updateField</code></pre>
+
+**参数**:
+
+*   `gid`: 群组ID
+*   `meta`: 群组字段信息(JSON对象格式)
+*   `modifyToken`: 群组管理密码
+
+**返回结果**:
+
+<pre><code>{
+    status: "",
+    info: ""
+}</code></pre>
+
+**测试地址**: [/api/v1/test/updateField](/api/v1/test/updateField)
