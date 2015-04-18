@@ -39,7 +39,6 @@ User.prototype.create = function(phone, password, cb) {
 };
 
 User.prototype.update = function(uid, name, phone, ext, cb) {
-    console.log("Update Method");
     var sql = "UPDATE `user` SET gmt_modified = NOW(), name = '" + name +
         "', phone = '" + phone + "', ext = '" + ext + "' WHERE id = '" +
         uid + "'";

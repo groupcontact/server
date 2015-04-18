@@ -13,7 +13,6 @@ function GeneralCallback(res, successFunc, failFunc) {
         if (result === user.ERROR) {
             res.json({status: -1, info: "请稍后重试"});
         } else if (result === user.FAILURE) {
-            console.log("Failure Branch.");
             if (typeof(failFunc) === "string") {
                 res.json({status: 0, info: failFunc});
             } else {
@@ -41,7 +40,6 @@ router.put("/:id", function(req, res) {
 
     // 权限验证
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
-        console.log("Authentication Success!!!");
         user.update(uid, name, phone, ext, new GeneralCallback(res, function(result) {
             console.log("Update Finished Successfully!!!");
             res.json({status: 1});
