@@ -7,6 +7,7 @@ var app = express();
 // 使用jade模板引擎
 app.set('views', './views');
 app.set('view engine', 'jade');
+app.locals.basedir = __dirname + "/views";
 
 // POST参数获取, 被注释的那几行暂时用不上
 var bodyParser = require("body-parser");

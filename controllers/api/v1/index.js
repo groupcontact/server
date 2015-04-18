@@ -12,7 +12,7 @@ router.use("/test", test);
  *
  */
 router.get("/", function(req, res) {
-    res.render('api/index', {title: "群通讯录 - API文档"});
+    res.render('api/v1/index', {title: "群通讯录 - API文档"});
 });
 
 /*
