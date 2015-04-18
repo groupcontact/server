@@ -13,6 +13,7 @@ function GeneralCallback(res, successFunc, failFunc) {
         if (result === user.ERROR) {
             res.json({status: -1, info: "请稍后重试"});
         } else if (result === user.FAILURE) {
+            console.log("Failure Branch.");
             if (typeof(failFunc) === "string") {
                 res.json({status: 0, info: failFunc});
             } else {
