@@ -31,7 +31,7 @@ router.post("/", function(req, res) {
             res.json({status: 1, id: rows[0].id});
         }, function() {
             user.create(phone, password, new GeneralCallback(res, function(result) {
-                    res.json({status: 1: id: result.insertId});
+                    res.json({status: 1, id: result.insertId});
                 }, "创建用户失败").callback);
         }).callback);
 });
