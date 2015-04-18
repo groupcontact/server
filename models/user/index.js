@@ -16,6 +16,7 @@ function AffectedRowsCallback(cb) {
     this.cb = cb;
 
     this.calback = function(err, result) {
+        console.log(result);
         cb(err ? ERROR : result.affectedRows === 0 ? FAILURE : result);
     }
 }
@@ -38,6 +39,7 @@ User.prototype.create = function(phone, password, cb) {
 };
 
 User.prototype.update = function(uid, name, phone, ext, cb) {
+    console.log("Update Method");
     var sql = "UPDATE `user` SET gmt_modified = NOW(), name = '" + name +
         "', phone = '" + phone + "', ext = '" + ext + "' WHERE id = '" +
         uid + "'";
