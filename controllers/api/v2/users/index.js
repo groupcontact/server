@@ -28,6 +28,18 @@ function GeneralCallback(res, successFunc, failFunc) {
     };
 }
 
+function ListResultCallback(res) {
+    this.res = res;
+
+    this.callback = function(result) {
+        if (result === user.ERROR) {
+            res.json({status: -1, info: "请稍后重试"});
+        } else {
+            res.json(result);
+        }
+    };
+}
+
 // 用户信息
 router.get("/:id", function(req, res) {
     var uid = req.param("id");
@@ -73,11 +85,7 @@ router.post("/", function(req, res) {
 router.get("/:id/groups", function(req, res) {
     var id = req.params.id;
 
-    user.group.list(id, new GeneralCallback(res, function(rows) {
-        res.json(rows);
-    }, function() {
-        res.json([]);
-    }).callback);
+    user.group.list(id, new ListResultCallback(res).callback);
 });
 
 // 加入群组
