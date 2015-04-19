@@ -54,13 +54,13 @@ router.post("/", function(req, res) {
     var phone = req.body.phone;
     var password = req.body.password;
 
-    user.exist(phone, new GeneralCallback(res, function(rows) {
-            var shasum = crypto.createHash('sha1');
-            shasum.update(password);
-            if (shasum.digest("hex") === rows[0].password) {
+    user.exist(phone, password, new GeneralCallback(res, function(rows) {
+            // 姓名字段不为空
+            if (rows[0].name) {
                 res.json({status: 2, id: rows[0].id});
             } else {
-                res.json({status: -1, info: "密码错误"});
+                // 姓名字段为空
+                res.json({status: 1, id: rows[0].id});
             }
         }, function() {
             user.create(phone, password, new GeneralCallback(res, function(result) {
