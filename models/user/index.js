@@ -37,6 +37,11 @@ User.prototype.auth = function(uid, password, cb) {
     this.db.query(sql, new RowCountCallback(cb).callback);
 };
 
+User.prototype.get = function(uid, cb) {
+    var sql = "SELECT * FROM user WHERE id = '" + uid + "'";
+    this.db.query(sql, new RowCountCallback(cb).callback);
+};
+
 User.prototype.exist = function(phone, password, cb) {
     var sql = "SELECT * FROM `user` WHERE `phone` = '" + phone +
         "' AND password = SHA1('" + password + "')";

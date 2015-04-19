@@ -47,7 +47,9 @@ function ListResultCallback(res, key) {
 // 用户信息
 router.get("/:id", function(req, res) {
     var uid = req.param("id");
-    var password = req.query.password;
+    var key = req.query.key;
+
+    user.get(uid, new ListResultCallback(res, key).callback);
 });
 
 // 更新用户信息
