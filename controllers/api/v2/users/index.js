@@ -75,7 +75,9 @@ router.get("/:id/groups", function(req, res) {
 
     user.group.list(id, new GeneralCallback(res, function(rows) {
         res.json(rows);
-    }));
+    }, function() {
+        res.json([]);
+    }).callback);
 });
 
 // 加入群组
