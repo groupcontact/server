@@ -4,10 +4,15 @@ function Group(db) {
     this.db = db;
 }
 
+function Friend(db) {
+    this.db = db;
+}
+
 function User(db) {
     this.db = db;
 
     this.group = new Group(db);
+    this.friend = new Friend(db);
 }
 
 function RowCountCallback(cb) {
@@ -56,7 +61,13 @@ Group.prototype.list = function(uid, cb) {
         "SELECT * FROM `usergroup` AS ug WHERE ug.uid = '" +
         uid + "' AND ug.gid = g.id)";
     this.db.query(sql, new RowCountCallback(cb).callback);
-}
+};
+
+Friend.prototype.list = function(uid, cb) {
+    var sql = "SELECT * FROM `user` AS u WHERE EXISTS (SELECT * FROM `friend`" +
+        " AS f WHERE f.uid = '" + uid + "' AND u.id = f.fid) ORDER BY `name`";
+    this.db.query(sql, new RowCountCallback(cb).callback);
+};
 
 User.prototype.ERROR = ERROR;
 User.prototype.FAILURE = FAILURE;

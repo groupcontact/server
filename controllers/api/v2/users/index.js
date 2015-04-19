@@ -106,7 +106,10 @@ router.delete("/:id/groups", function(req, res) {
 
 // 朋友列表
 router.get("/:id/friends", function(req, res) {
+    var id = req.params.id;
+    var key = req.query.key;
 
+    user.friend.list(id, new ListResultCallback(res, key).callback);
 });
 
 // 添加朋友
