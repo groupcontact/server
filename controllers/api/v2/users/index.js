@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var user = require.main.require("./models").user;
-var crypto = require("crypto");
+var aes = require.main.require("./lib/aes");
 
 // 通用的回调函数
 function GeneralCallback(res, successFunc, failFunc) {
@@ -28,16 +28,18 @@ function GeneralCallback(res, successFunc, failFunc) {
     };
 }
 
-function ListResultCallback(res) {
+function ListResultCallback(res, key) {
     this.res = res;
 
     this.callback = function(result) {
-        if (result === user.ERROR) {
-            res.json({status: -1, info: "请稍后重试"});
-        } else if (result === user.FAILURE) {
-            res.json([]);
+        var listResult = [];
+        if (result != user.ERROR && result != user.FAILURE) {
+            listResult = result;
+        }
+        if (key) {
+            res.end(aes.encrypt(JSON.stringify(listResult), key));
         } else {
-            res.json(result);
+            res.json(listResult);
         }
     };
 }
@@ -45,7 +47,7 @@ function ListResultCallback(res) {
 // 用户信息
 router.get("/:id", function(req, res) {
     var uid = req.param("id");
-    var name = req.query.name;
+    var password = req.query.password;
 });
 
 // 更新用户信息
@@ -86,8 +88,9 @@ router.post("/", function(req, res) {
 // 群组列表
 router.get("/:id/groups", function(req, res) {
     var id = req.params.id;
+    var key = req.body.key;
 
-    user.group.list(id, new ListResultCallback(res).callback);
+    user.group.list(id, new ListResultCallback(res, key).callback);
 });
 
 // 加入群组
