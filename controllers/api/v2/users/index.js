@@ -88,7 +88,7 @@ router.post("/", function(req, res) {
 // 群组列表
 router.get("/:id/groups", function(req, res) {
     var id = req.params.id;
-    var key = req.body.key;
+    var key = req.query.key;
 
     user.group.list(id, new ListResultCallback(res, key).callback);
 });
