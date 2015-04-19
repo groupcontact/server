@@ -34,6 +34,8 @@ function ListResultCallback(res) {
     this.callback = function(result) {
         if (result === user.ERROR) {
             res.json({status: -1, info: "请稍后重试"});
+        } else if (result === user.FAILURE) {
+            res.json([]);
         } else {
             res.json(result);
         }
