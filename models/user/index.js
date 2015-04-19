@@ -1,7 +1,13 @@
 var ERROR = -1, FAILURE = 0;
 
+function Group(db) {
+    this.db = db;
+}
+
 function User(db) {
     this.db = db;
+
+    this.group = new Group(db);
 }
 
 function RowCountCallback(cb) {
@@ -44,6 +50,13 @@ User.prototype.update = function(uid, name, phone, ext, cb) {
         uid + "'";
     this.db.query(sql, new AffectedRowsCallback(cb).callback);
 };
+
+Group.prototype.list = function(uid, cb) {
+    var sql = "SELECT `id`, `name`, `desc` FROM `group` AS g WHERE EXISTS (" +
+        "SELECT * FROM `usergroup` AS ug WHERE ug.uid = '" +
+        uid + "' AND ug.gid = g.id)";
+    this.db.query(sql, new RowCountCallback(cb).callback);
+}
 
 User.prototype.ERROR = ERROR;
 User.prototype.FAILURE = FAILURE;

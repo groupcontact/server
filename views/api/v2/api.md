@@ -14,7 +14,7 @@ post请求至:
 *   `phone`: 用户的手机号
 *   `password`: 密码
 
-**返回结果**
+**返回结果**:
 
 <pre><code>{
     status: 0,
@@ -26,7 +26,7 @@ post请求至:
 
 若有匹配的手机号与密码, 则不新创建，返回的`id`为原来的用户ID。
 
-`status`为1时表示新增记录成功(或记录已存在但是`name`字段未设置), 为2时表示记录已存在, 且`name`字段已设置好
+`status`为1时表示新增记录成功(或记录已存在但是`name`字段未设置), 为2时表示记录已存在, 且`name`字段已设置好。
 
 **测试地址**: [api/v2/test/createUser](/api/v2/test/createUser)
 
@@ -43,8 +43,15 @@ put请求至:
 *   `ext`: 新的扩展字段信息
 *   `password`: 密码
 
+**返回结果**:
+
+<pre><code>{
+    status: 0,
+    info: ""
+}</code></pre>
+
 **注释**:
 
-为了符合Restful标准, 需要将用户ID作为参数放入链接中, 并且需要使用PUT的方法类型, 暂时不支持修改密码。
+为了符合Restful标准, 需要将用户ID作为参数放入链接中, 并且需要使用PUT的方法类型, 此方法不支持更新密码。返回结果中的`status`为1表示更新成功, 为0表示更新失败。
 
 **测试地址**: [api/v2/test/updateUser](/api/v2/test/updateUser)

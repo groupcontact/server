@@ -69,6 +69,25 @@ router.post("/", function(req, res) {
         }).callback);
 });
 
+// 群组列表
+router.get("/:id/groups", function(req, res) {
+    var id = req.params.id;
+
+    user.group.list(id, new GeneralCallback(res, function(rows) {
+        res.json(rows);
+    }));
+});
+
+// 加入群组
+router.post("/:id/groups", function(req, res) {
+
+});
+
+// 退出群组
+router.delete("/:id/groups", function(req, res) {
+
+});
+
 
 // 朋友列表
 router.get("/:id/friends", function(req, res) {
@@ -82,21 +101,6 @@ router.post("/:id/friends", function(req, res) {
 
 // 删除朋友
 router.delete("/:id/friends", function(req, res) {
-
-});
-
-// 群组列表
-router.get("/:id/groups", function(req, res) {
-
-});
-
-// 加入群组
-router.post("/:id/groups", function(req, res) {
-
-});
-
-// 退出群组
-router.delete("/:id/groups", function(req, res) {
 
 });
 
