@@ -12,6 +12,13 @@ function Group(db) {
     this.member = new Member(db);
 }
 
+// 查询群组
+Group.prototype.query = function(name, cb) {
+    var sql = "SELECT `id`, `name`, `desc` FROM `group` WHERE `name` LIKE '" +
+        name + "%'";
+    this.db.query(sql, new RowCountCallback(cb).callback);
+};
+
 // 列举组内的成员
 Member.prototype.list = function(gid, cb) {
     sql = "SELECT * FROM `user` AS u WHERE EXISTS (" +
