@@ -1,53 +1,20 @@
 var express = require("express");
 var router = express.Router();
 var user = require.main.require("./models").user;
-var aes = require.main.require("./lib/aes");
+var cb = require.main.require("./lib/cb");
+var config = require.main.require("./lib/config");
 
-// 通用的回调函数
-function GeneralCallback(res, successFunc, failFunc) {
-    this.res = res;
-    this.failFunc = failFunc;
-    this.successFunc = successFunc;
+var GeneralCallback = cb.GeneralCallback;
+var ListResultCallback = cb.ListResultCallback;
 
-    this.callback = function(result) {
-        if (result === user.ERROR) {
-            res.json({status: -1, info: "请稍后重试"});
-        } else if (result === user.FAILURE) {
-            if (typeof(failFunc) === "string") {
-                res.json({status: 0, info: failFunc});
-            } else {
-                failFunc();
-            }
-        } else {
-            if (successFunc) {
-                successFunc(result);
-            } else {
-                res.json({status: 1});
-            }
-        }
-    };
-}
-
-function ListResultCallback(res, key) {
-    this.res = res;
-
-    this.callback = function(result) {
-        var listResult = [];
-        if (result != user.ERROR && result != user.FAILURE) {
-            listResult = result;
-        }
-        if (key) {
-            res.end(aes.encrypt(JSON.stringify(listResult), key));
-        } else {
-            res.json(listResult);
-        }
-    };
-}
-
-// 用户信息
+// 查询用户信息
 router.get("/:id", function(req, res) {
     var uid = req.param("id");
     var key = req.query.key;
+
+    if (key === undefined) {
+        key = config.DEFAULT_KEY;
+    }
 
     user.get(uid, new ListResultCallback(res, key).callback);
 });
@@ -92,6 +59,10 @@ router.get("/:id/groups", function(req, res) {
     var id = req.params.id;
     var key = req.query.key;
 
+    if (key === undefined) {
+        key = config.DEFAULT_KEY;
+    }
+
     user.group.list(id, new ListResultCallback(res, key).callback);
 });
 
@@ -102,7 +73,8 @@ router.post("/:id/groups", function(req, res) {
 
 // 退出群组
 router.delete("/:id/groups", function(req, res) {
-
+    var id = req.params.id;
+    var modifyToken = req.body.modifyToken;
 });
 
 
@@ -110,6 +82,10 @@ router.delete("/:id/groups", function(req, res) {
 router.get("/:id/friends", function(req, res) {
     var id = req.params.id;
     var key = req.query.key;
+
+    if (key === undefined) {
+        key = config.DEFAULT_KEY;
+    }
 
     user.friend.list(id, new ListResultCallback(res, key).callback);
 });

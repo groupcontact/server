@@ -2,9 +2,11 @@ var express = require("express");
 var router = express.Router();
 
 var users = require("./users");
+var groups = require("./groups");
 var test = require("./test");
 
 router.use("/users", users);
+router.use("/groups", groups);
 router.use("/test", test);
 
 router.get("/", function(req, res) {
