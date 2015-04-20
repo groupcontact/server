@@ -28,6 +28,8 @@ router.put("/:id", function(req, res) {
     var ext = req.body.ext;
     var password = req.body.password;
 
+    password = aes.decrypt(password, config.DEFAULT_KEY);
+
     // 权限验证
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
         user.update(uid, name, phone, ext, new GeneralCallback(res, null,
@@ -39,6 +41,8 @@ router.put("/:id", function(req, res) {
 router.post("/", function(req, res) {
     var phone = req.body.phone;
     var password = req.body.password;
+
+    password = aes.decrypt(password, config.DEFAULT_KEY);
 
     user.exist(phone, password, new GeneralCallback(res, function(rows) {
             // 姓名字段不为空
