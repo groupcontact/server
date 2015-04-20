@@ -64,6 +64,15 @@ User.prototype.update = function(uid, name, phone, ext, cb) {
 };
 
 /*
+ * 权限验证
+ */
+Group.prototype.auth = function(gid, accessToken) {
+    var sql = "SELECT * FROM `group` WHERE id = '" + gid + "' AND access_token = '" +
+        accessToken + "'";
+    this.db.query(sql, new RowCountCallback(cb).callback);
+};
+
+/*
  * 查询用户加入的组列表信息
  */
 Group.prototype.list = function(uid, cb) {
@@ -74,26 +83,28 @@ Group.prototype.list = function(uid, cb) {
 };
 
 /*
- * 权限验证
- */
-Group.prototype.auth = function(gid, accessToken) {
-    var sql = "SELECT * FROM `group` WHERE id = '" + gid + "' AND access_token = '" +
-        accessToken + "'";
-    this.db.query(sql, new RowCountCallback(cb).callback);
-};
-
-/*
  * 加入群组
  */
 Group.prototype.join = function(uid, gid, cb) {
-
+    var sql = "INSERT INTO `usergroup` (`gmt_create`, `gmt_modified`, `uid`, `gid`)" +
+        " VALUES (NOW(), NOW(), '" + uid + "', '" + gid + "')";
+    this.db.query(sql, new AffectedRowsCallback(cb).callback);
 };
 
 /*
  * 退出群组
  */
 Group.prototype.leave = function(uid, gid, cb) {
+    var sql = "DELETE FROM `usergroup` WHERE uid = '" + uid + "' AND gid = '" +
+        gid + "'";
+    this.db.query(sql, new AffectedRowsCallback(cb).callback);
+};
 
+// 验证即将添加的好友是否存在
+Friend.prototype.auth = function(uid, phone, cb) {
+    var sql = "SELECT * FROM `user` WHERE id = '" + uid + "' AND phone = '" +
+        phone + "'";
+    this.db.query(sql, new RowCountCallback(cb).callback);
 };
 
 /*
@@ -106,17 +117,30 @@ Friend.prototype.list = function(uid, cb) {
 };
 
 /*
+ * 检查朋友关系是否已存在
+ */
+Friend.prototype.exist = function(uid, fid, cb) {
+    var sql = "SELECT * FROM `friend` WHERE uid = '" + uid + "' AND fid = '" +
+        fid + "'";
+    this.db.query(sql, new RowCountCallback(cb).callback);
+};
+
+/*
  * 添加好友
  */
 Friend.prototype.add = function(uid, fid, cb) {
-
+    var sql = "INSERT INTO `friend` (`gmt_create`, `gmt_modified`, `uid`, `fid`)" +
+        " VALUES (NOW(), NOW(), '" + uid + "', '" + fid + "')";
+    this.db.query(sql, new AffectedRowsCallback(cb).callback);
 };
 
 /*
  * 删除好友
  */
 Friend.prototype.delete = function(uid, fid, cb) {
-
+    var sql = "DELETE FROM `friend` WHERE uid = '" + uid + "' AND fid = '" +
+        fid + "'";
+    this.db.query(sql, new AffectedRowsCallback(cb).callback);
 };
 
 module.exports = User;
