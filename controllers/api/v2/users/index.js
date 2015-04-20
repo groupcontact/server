@@ -3,6 +3,7 @@ var router = express.Router();
 var user = require.main.require("./models").user;
 var cb = require.main.require("./lib/cb");
 var config = require.main.require("./lib/config");
+var aes = require.main.require("./lib/aes");
 
 var GeneralCallback = cb.GeneralCallback;
 var ListResultCallback = cb.ListResultCallback;
@@ -141,6 +142,7 @@ router.delete("/:id/friends", function(req, res) {
     var password = req.query.password;
     var fid = req.query.fid;
 
+    password = aes.decrypt(password, config.DEFAULT_KEY);
     console.log(password);
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
