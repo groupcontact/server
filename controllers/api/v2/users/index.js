@@ -138,8 +138,8 @@ router.post("/:id/friends", function(req, res) {
 // 删除朋友
 router.delete("/:id/friends", function(req, res) {
     var uid = req.params.id;
-    var password = req.body.password;
-    var fid = req.body.fid;
+    var password = req.query.password;
+    var fid = req.query.fid;
 
     console.log(password);
 
