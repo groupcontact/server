@@ -122,6 +122,8 @@ router.post("/:id/friends", function(req, res) {
     var fid = req.body.fid;
     var phone = req.body.phone;
 
+    console.log(password);
+
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
         user.friend.auth(fid, phone, new GeneralCallback(res, function(rows) {
             user.friend.exist(uid, fid, new GeneralCallback(res, function(rows) {
