@@ -74,7 +74,14 @@ router.post("/:id/groups", function(req, res) {
     var gid = req.body.gid;
     var accessToken = req.body.accessToken;
 
+    password = aes.decrypt(password, config.DEFAULT_KEY);
+    accessToken = aes.decrypt(accessToken, config.DEFAULT_KEY);
 
+    user.auth(uid, password, new GeneralCallback(res, function(rows) {
+        user.group.auth(gid, accessToken, new GeneralCallback(res, function(rows) {
+            user.group.join(uid, gid, new GeneralCallback(res, null, "加入群组失败"));
+        }, "访问密码错误").callback);
+    }, "无权限").callback);
 });
 
 // 退出群组
@@ -84,7 +91,14 @@ router.delete("/:id/groups", function(req, res) {
     var gid = req.body.gid;
     var accessToken = req.body.accessToken;
 
+    password = aes.decrypt(password, config.DEFAULT_KEY);
+    accessToken = aes.decrypt(accessToken, config.DEFAULT_KEY);
 
+    user.auth(uid, password, new GeneralCallback(res, function(rows) {
+        user.group.auth(gid, accessToken, new GeneralCallback(res, function(rows) {
+            user.group.leave(uid, gid, new GeneralCallback(res, null, "退出群组失败"));
+        }, "访问密码错误").callback);
+    }, "无权限").callback);
 });
 
 
