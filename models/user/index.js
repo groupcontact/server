@@ -67,8 +67,8 @@ User.prototype.update = function(uid, name, phone, ext, cb) {
  * 权限验证
  */
 Group.prototype.auth = function(gid, accessToken, cb) {
-    var sql = "SELECT * FROM `group` WHERE id = '" + gid + "' AND access_token = '" +
-        accessToken + "'";
+    var sql = "SELECT * FROM `group` WHERE id = '" + gid + "' AND access_token = SHA1('" +
+        accessToken + "')";
     this.db.query(sql, new RowCountCallback(cb).callback);
 };
 
