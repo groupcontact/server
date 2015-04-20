@@ -9,7 +9,7 @@ var ListResultCallback = cb.ListResultCallback;
 
 // 查询用户信息
 router.get("/:id", function(req, res) {
-    var uid = req.param("id");
+    var uid = req.params.id;
     var key = req.query.key;
 
     if (key === undefined) {
