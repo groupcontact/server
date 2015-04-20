@@ -110,7 +110,7 @@ router.post("/:id/friends", function(req, res) {
     password = aes.decrypt(password, config.DEFAULT_KEY);
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
-        user.friend.check(name, phone, new GeneralCallback(res, function(rows) {
+        user.friend.auth(name, phone, new GeneralCallback(res, function(rows) {
             user.friend.add(uid, rows[0].id, new GeneralCallback(res, null, "添加好友失败").callback);
         }, "对方用户不存在").callback);
     }, "无权限").callback);
