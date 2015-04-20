@@ -64,6 +64,16 @@ User.prototype.update = function(uid, name, phone, ext, cb) {
 };
 
 /*
+ * 更新密码
+ */
+User.prototype.setPassword = function(uid, oldpass, newpass, cb) {
+    var sql = "UPDATE `user` SET gmt_modified = NOW(), password = SHA1('" +
+        newpass + "') WHERE id = '" + uid + "' AND password = SHA1('" +
+        oldpass + "')";
+    this.db.query(sql, new AffectedRowsCallback(cb).callback);
+};
+
+/*
  * 权限验证
  */
 Group.prototype.auth = function(gid, accessToken, cb) {

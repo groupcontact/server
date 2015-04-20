@@ -59,6 +59,18 @@ router.post("/", function(req, res) {
         }).callback);
 });
 
+// 设置新密码
+router.put("/:id/password", function(req, res) {
+    var uid = req.params.id;
+    var oldpass = req.body.password;
+    var newpass = req.body.newpassword;
+
+    oldpass = aes.decrypt(oldpass, config.DEFAULT_KEY);
+    newpass = aes.decrypt(newpass, config.DEFAULT_KEY);
+
+    user.setPassword(uid, oldpass, newpass, new GeneralCallback(res, null, "设置密码失败").callback);
+});
+
 // 群组列表
 router.get("/:id/groups", function(req, res) {
     var id = req.params.id;
