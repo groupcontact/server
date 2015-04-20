@@ -2,8 +2,6 @@ var cb = require.main.require("./lib/cb");
 var RowCountCallback = cb.RowCountCallback;
 var AffectedRowsCallback = cb.AffectedRowsCallback;
 
-var ERROR = -1, FAILURE = 0;
-
 function Member(db) {
     this.db = db;
 }

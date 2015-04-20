@@ -1,8 +1,7 @@
 var cb = require.main.require("./lib/cb");
+
 var RowCountCallback = cb.RowCountCallback;
 var AffectedRowsCallback = cb.AffectedRowsCallback;
-
-var ERROR = -1, FAILURE = 0;
 
 function Group(db) {
     this.db = db;
@@ -119,8 +118,5 @@ Friend.prototype.add = function(uid, fid, cb) {
 Friend.prototype.delete = function(uid, fid, cb) {
 
 };
-
-User.prototype.ERROR = ERROR;
-User.prototype.FAILURE = FAILURE;
 
 module.exports = User;
