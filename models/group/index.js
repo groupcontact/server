@@ -19,6 +19,14 @@ Group.prototype.query = function(name, cb) {
     this.db.query(sql, new RowCountCallback(cb).callback);
 };
 
+// 创建群组
+Group.prototype.create = function(name, desc, accessToken, modifyToken, cb) {
+    var sql = "INSERT INTO `group` (`gmt_create`, `gmt_modified`, `name`, `desc`, `access_token`, " +
+        "`modify_token`) VALUES (NOW(), NOW(), '" + name + "', '" + desc +
+        "', SHA1('" + accessToken + "'), SHA1('" + modifyToken + "'))";
+    this.db.query(sql, new AffectedRowsCallback(cb).callback);
+};
+
 // 列举组内的成员
 Member.prototype.list = function(gid, cb) {
     sql = "SELECT * FROM `user` AS u WHERE EXISTS (" +
