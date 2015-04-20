@@ -122,7 +122,7 @@ router.post("/:id/friends", function(req, res) {
     var fid = req.body.fid;
     var phone = req.body.phone;
 
-    console.log(password);
+
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
         user.friend.auth(fid, phone, new GeneralCallback(res, function(rows) {
@@ -140,6 +140,8 @@ router.delete("/:id/friends", function(req, res) {
     var uid = req.params.id;
     var password = req.body.password;
     var fid = req.body.fid;
+
+    console.log(password);
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
         user.friend.delete(uid, fid, new GeneralCallback(res, null, "删除好友失败").callback);
