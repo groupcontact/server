@@ -101,8 +101,8 @@ Group.prototype.leave = function(uid, gid, cb) {
 };
 
 // 验证即将添加的好友是否存在
-Friend.prototype.auth = function(uid, phone, cb) {
-    var sql = "SELECT * FROM `user` WHERE id = '" + uid + "' AND phone = '" +
+Friend.prototype.auth = function(name, phone, cb) {
+    var sql = "SELECT * FROM `user` WHERE name = '" + name + "' AND phone = '" +
         phone + "'";
     this.db.query(sql, new RowCountCallback(cb).callback);
 };

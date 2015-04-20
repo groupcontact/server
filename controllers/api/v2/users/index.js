@@ -74,15 +74,7 @@ router.post("/:id/groups", function(req, res) {
     var gid = req.body.gid;
     var accessToken = req.body.accessToken;
 
-    user.auth(uid, password, new GeneralCallback(res, function(rows) {
-        user.group.auth(gid, accessToken, new GeneralCallback(res, function(rows) {
-            user.group.exist(uid, gid, new GeneralCallback(res, function(rows) {
-                res.json({status: -1, info: "您已加入该群组, 无需再次加入"});
-            }, function() {
-                user.group.join(uid, gid, new GeneralCallback(res, null, "加入群组失败"));
-            }));
-        }, "访问密码不正确"));
-    }, "用户不存在"));
+
 });
 
 // 退出群组
@@ -92,15 +84,7 @@ router.delete("/:id/groups", function(req, res) {
     var gid = req.body.gid;
     var accessToken = req.body.accessToken;
 
-    user.auth(uid, password, new GeneralCallback(res, function(rows) {
-        user.group.auth(gid, accessToken, new GeneralCallback(res, function(rows) {
-            user.group.exist(uid, gid, new GeneralCallback(res, function(rows) {
-                user.group.leave(uid, gid, new GeneralCallback(res, null, "退出群组失败"));
-            }, function() {
-                res.json({status: -1, info: "您未加入该群组, 无需退出"});
-            }));
-        }, "访问密码不正确"));
-    }, "用户不存在"));
+
 });
 
 
@@ -120,20 +104,16 @@ router.get("/:id/friends", function(req, res) {
 router.post("/:id/friends", function(req, res) {
     var uid = req.params.id;
     var password = req.body.password;
-    var fid = req.body.fid;
+    var name = req.body.name;
     var phone = req.body.phone;
 
-
+    password = aes.decrypt(password, config.DEFAULT_KEY);
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
-        user.friend.auth(fid, phone, new GeneralCallback(res, function(rows) {
-            user.friend.exist(uid, fid, new GeneralCallback(res, function(rows) {
-                res.json({status: -1, info: "您和对方已是好友, 无需添加"});
-            }, function() {
-                user.friend.add(uid, fid, new GeneralCallback(res, null, "添加好友失败"));
-            }));
-        }, "对方用户不存在"));
-    }, "用户不存在"));
+        user.friend.check(name, phone, new GeneralCallback(res, function(rows) {
+            user.friend.add(uid, rows[0].id, new GeneralCallback(res, null, "添加好友失败").callback);
+        }, "对方用户不存在").callback);
+    }, "无权限").callback);
 });
 
 // 删除朋友
@@ -143,11 +123,10 @@ router.delete("/:id/friends", function(req, res) {
     var fid = req.query.fid;
 
     password = aes.decrypt(password, config.DEFAULT_KEY);
-    console.log(password);
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
         user.friend.delete(uid, fid, new GeneralCallback(res, null, "删除好友失败").callback);
-    }, "用户不存在").callback);
+    }, "无权限").callback);
 });
 
 module.exports = router;
