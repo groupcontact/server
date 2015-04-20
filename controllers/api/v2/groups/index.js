@@ -36,7 +36,7 @@ router.post("/", function(req, res) {
 
     user.auth(uid, password, new GeneralCallback(res, function() {
         group.create(name, desc, accessToken, modifyToken, new GeneralCallback(res, function(result) {
-            user.join(uid, result.insertId, new GeneralCallback(res, null, "创建群组成功但未将自己加入").callback);
+            user.group.join(uid, result.insertId, new GeneralCallback(res, null, "创建群组成功但未将自己加入").callback);
         }, "创建群组失败").callback);
     }, "无权限").callback);
 });
