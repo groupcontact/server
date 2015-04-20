@@ -140,8 +140,8 @@ router.delete("/:id/friends", function(req, res) {
     var fid = req.body.fid;
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
-        user.friend.delete(uid, fid, new GeneralCallback(res, null, "删除好友失败"));
-    }, "用户不存在"));
+        user.friend.delete(uid, fid, new GeneralCallback(res, null, "删除好友失败").callback);
+    }, "用户不存在").callback);
 });
 
 module.exports = router;
