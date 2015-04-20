@@ -138,16 +138,9 @@ router.delete("/:id/friends", function(req, res) {
     var uid = req.params.id;
     var password = req.body.password;
     var fid = req.body.fid;
-    var phone = req.body.phone;
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
-        user.friend.auth(fid, phone, new GeneralCallback(res, function(rows) {
-            user.friend.exist(uid, fid, new GeneralCallback(res, function(rows) {
-                user.friend.delete(uid, fid, new GeneralCallback(res, null, "删除好友失败"));
-            }, function() {
-                res.json({status: -1, info: "您和对方不是好友, 无需删除"});
-            }));
-        }, "对方用户不存在"));
+        user.friend.delete(uid, fid, new GeneralCallback(res, null, "删除好友失败"));
     }, "用户不存在"));
 });
 
