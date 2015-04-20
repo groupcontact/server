@@ -87,9 +87,9 @@ router.post("/:id/groups", function(req, res) {
 // 退出群组
 router.delete("/:id/groups", function(req, res) {
     var uid = req.params.id;
-    var password = req.body.password;
-    var gid = req.body.gid;
-    var accessToken = req.body.accessToken;
+    var password = req.query.password;
+    var gid = req.query.gid;
+    var accessToken = req.query.accessToken;
 
     password = aes.decrypt(password, config.DEFAULT_KEY);
     accessToken = aes.decrypt(accessToken, config.DEFAULT_KEY);
