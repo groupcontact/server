@@ -4,6 +4,7 @@ var user = require.main.require("./models").user;
 var cb = require.main.require("./lib/cb");
 var config = require.main.require("./lib/config");
 var aes = require.main.require("./lib/aes");
+var check = require.main.require("./lib/check").check;
 
 var GeneralCallback = cb.GeneralCallback;
 var ListResultCallback = cb.ListResultCallback;
@@ -11,13 +12,14 @@ var ListResultCallback = cb.ListResultCallback;
 // 查询用户信息
 router.get("/:id", function(req, res) {
     var uid = req.params.id;
-    var key = req.query.key;
 
-    if (key === undefined) {
-        key = config.DEFAULT_KEY;
+    var msg = check({uid: uid});
+    if (msg) {
+        res.json(aes.encrypt("[]", config.DEFAULT_KEY));
+        return;
     }
 
-    user.get(uid, new ListResultCallback(res, key).callback);
+    user.get(uid, new ListResultCallback(res, config.DEFAULT_KEY).callback);
 });
 
 // 更新用户信息
@@ -29,6 +31,18 @@ router.put("/:id", function(req, res) {
     var password = req.body.password;
 
     password = aes.decrypt(password, config.DEFAULT_KEY);
+
+    var msg = check({
+        uid: uid,
+        phone: phone,
+        userName: name,
+        userExt: ext,
+        password: password
+    });
+    if (msg) {
+        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        return;
+    }
 
     // 权限验证
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
@@ -43,6 +57,15 @@ router.post("/", function(req, res) {
     var password = req.body.password;
 
     password = aes.decrypt(password, config.DEFAULT_KEY);
+
+    var msg = check({
+        phone: phone,
+        password: password
+    });
+    if (msg) {
+        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        return;
+    }
 
     user.exist(phone, password, new GeneralCallback(res, function(rows) {
             // 姓名字段不为空
@@ -68,19 +91,32 @@ router.put("/:id/password", function(req, res) {
     oldpass = aes.decrypt(oldpass, config.DEFAULT_KEY);
     newpass = aes.decrypt(newpass, config.DEFAULT_KEY);
 
+    var msg = check({
+        uid: uid,
+        password: oldpass,
+        password: newpass
+    });
+    if (msg) {
+        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        return;
+    }
+
     user.setPassword(uid, oldpass, newpass, new GeneralCallback(res, null, "设置密码失败").callback);
 });
 
 // 群组列表
 router.get("/:id/groups", function(req, res) {
     var id = req.params.id;
-    var key = req.query.key;
 
-    if (key === undefined) {
-        key = config.DEFAULT_KEY;
+    var msg = check({
+        uid: id
+    });
+    if (msg) {
+        res.json(aes.encrypt("[]", config.DEFAULT_KEY));
+        return;
     }
 
-    user.group.list(id, new ListResultCallback(res, key).callback);
+    user.group.list(id, new ListResultCallback(res, config.DEFAULT_KEY).callback);
 });
 
 // 加入群组
@@ -92,6 +128,17 @@ router.post("/:id/groups", function(req, res) {
 
     password = aes.decrypt(password, config.DEFAULT_KEY);
     accessToken = aes.decrypt(accessToken, config.DEFAULT_KEY);
+
+    var msg = check({
+        uid: uid,
+        password: password,
+        gid: gid,
+        accessToken: accessToken
+    });
+    if (msg) {
+        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        return;
+    }
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
         user.group.auth(gid, accessToken, new GeneralCallback(res, function(rows) {
@@ -108,6 +155,16 @@ router.delete("/:id/groups", function(req, res) {
 
     password = aes.decrypt(password, config.DEFAULT_KEY);
 
+    var msg = check({
+        uid: uid,
+        password: password,
+        gid: gid
+    });
+    if (msg) {
+        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        return;
+    }
+
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
         user.group.leave(uid, gid, new GeneralCallback(res, null, "退出群组失败").callback);
     }, "无权限").callback);
@@ -117,13 +174,16 @@ router.delete("/:id/groups", function(req, res) {
 // 朋友列表
 router.get("/:id/friends", function(req, res) {
     var id = req.params.id;
-    var key = req.query.key;
 
-    if (key === undefined) {
-        key = config.DEFAULT_KEY;
+    var msg = check({
+        uid: id
+    });
+    if (msg) {
+        res.json(aes.encrypt("[]", config.DEFAULT_KEY));
+        return;
     }
 
-    user.friend.list(id, new ListResultCallback(res, key).callback);
+    user.friend.list(id, new ListResultCallback(res, config.DEFAULT_KEY).callback);
 });
 
 // 添加朋友
@@ -134,6 +194,17 @@ router.post("/:id/friends", function(req, res) {
     var phone = req.body.phone;
 
     password = aes.decrypt(password, config.DEFAULT_KEY);
+
+    var msg = check({
+        uid: uid,
+        password: password,
+        userName: name,
+        phone: phone
+    });
+    if (msg) {
+        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        return;
+    }
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
         user.friend.auth(name, phone, new GeneralCallback(res, function(rows) {
@@ -149,6 +220,16 @@ router.delete("/:id/friends", function(req, res) {
     var fid = req.query.fid;
 
     password = aes.decrypt(password, config.DEFAULT_KEY);
+
+    var msg = check({
+        uid: uid,
+        password: password,
+        fid: fid
+    });
+    if (msg) {
+        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        return;
+    }
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
         user.friend.delete(uid, fid, new GeneralCallback(res, null, "删除好友失败").callback);
