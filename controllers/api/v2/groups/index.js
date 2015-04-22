@@ -49,10 +49,6 @@ router.post("/", function(req, res) {
         return;
     }
 
-    if (!check.createGroup(res, name, desc, accessToken, modifyToken, uid, password)) {
-        return;
-    }
-
     user.auth(uid, password, new GeneralCallback(res, function() {
         group.create(name, desc, accessToken, modifyToken, new GeneralCallback(res, function(result) {
             user.group.join(uid, result.insertId, new GeneralCallback(res, null, "创建群组成功但未将自己加入").callback);
