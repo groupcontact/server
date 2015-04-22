@@ -105,15 +105,11 @@ router.delete("/:id/groups", function(req, res) {
     var uid = req.params.id;
     var password = req.query.password;
     var gid = req.query.gid;
-    var accessToken = req.query.accessToken;
 
     password = aes.decrypt(password, config.DEFAULT_KEY);
-    accessToken = aes.decrypt(accessToken, config.DEFAULT_KEY);
 
     user.auth(uid, password, new GeneralCallback(res, function(rows) {
-        user.group.auth(gid, accessToken, new GeneralCallback(res, function(rows) {
-            user.group.leave(uid, gid, new GeneralCallback(res, null, "退出群组失败").callback);
-        }, "访问密码错误").callback);
+        user.group.leave(uid, gid, new GeneralCallback(res, null, "退出群组失败").callback);
     }, "无权限").callback);
 });
 

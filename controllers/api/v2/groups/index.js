@@ -41,6 +41,8 @@ router.post("/", function(req, res) {
     }, "无权限").callback);
 });
 
+// 
+
 // 列举群组内的成员
 router.get("/:id/members", function(req, res) {
     var id = req.params.id;
@@ -51,6 +53,27 @@ router.get("/:id/members", function(req, res) {
     }
 
     group.member.list(id, new ListResultCallback(res, key).callback);
+});
+
+
+// 查询群组的meta信息
+router.get("/:id/meta", function(req, res) {
+    var id = req.params.id;
+    var key = req.query.key;
+
+    if (key === undefined) {
+        key = config.DEFAULT_KEY;
+    }
+
+});
+
+// 更新群组的meta信息
+router.put("/:id/meta", function(req, res) {
+    var id = req.params.id;
+    var meta = req.body.meta;
+    var modifyToken = req.body.modifyToken;
+
+    modifyToken = aes.encrypt(modifyToken);
 });
 
 module.exports = router;
