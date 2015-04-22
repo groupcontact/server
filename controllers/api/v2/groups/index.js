@@ -45,7 +45,7 @@ router.post("/", function(req, res) {
         password: password
     });
     if (msg) {
-        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        res.json({status: -1, info: msg});
         return;
     }
 

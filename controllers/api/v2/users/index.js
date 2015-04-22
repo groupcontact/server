@@ -40,7 +40,7 @@ router.put("/:id", function(req, res) {
         password: password
     });
     if (msg) {
-        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        res.json({status: -1, info: msg});
         return;
     }
 
@@ -63,7 +63,7 @@ router.post("/", function(req, res) {
         password: password
     });
     if (msg) {
-        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        res.json({status: -1, info: msg});
         return;
     }
 
@@ -97,7 +97,7 @@ router.put("/:id/password", function(req, res) {
         password: newpass
     });
     if (msg) {
-        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        res.json({status: -1, info: msg});
         return;
     }
 
@@ -136,7 +136,7 @@ router.post("/:id/groups", function(req, res) {
         accessToken: accessToken
     });
     if (msg) {
-        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        res.json({status: -1, info: msg});
         return;
     }
 
@@ -161,7 +161,7 @@ router.delete("/:id/groups", function(req, res) {
         gid: gid
     });
     if (msg) {
-        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        res.json({status: -1, info: msg});
         return;
     }
 
@@ -202,7 +202,7 @@ router.post("/:id/friends", function(req, res) {
         phone: phone
     });
     if (msg) {
-        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        res.json({status: -1, info: msg});
         return;
     }
 
@@ -227,7 +227,7 @@ router.delete("/:id/friends", function(req, res) {
         fid: fid
     });
     if (msg) {
-        res.json(aes.encrypt(JSON.stringify({status: -1, info: msg}), config.DEFAULT_KEY));
+        res.json({status: -1, info: msg});
         return;
     }
 
