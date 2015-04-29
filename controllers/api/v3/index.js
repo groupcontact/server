@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 router.all("/*", function(req, res, next) {
-    console.log(req.protocol + "://" + req.hostname + "/" + req.originalUrl);
+    console.log(req.protocol + "://" + req.hostname + req.originalUrl);
     // if not secure
     if (req.protocol === "https") {
         next();
