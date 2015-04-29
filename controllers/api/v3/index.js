@@ -3,11 +3,11 @@ var router = express.Router();
 
 router.all("/*", function(req, res, next) {
     // if not secure
-    if (!req.secure) {
+    if (req.secure) {
+        next();
+    } else {
         res.json({ status: -1, info: "请使用https协议访问API" });
-        return;
     }
-    next();
 });
 
 var users = require("./users");
