@@ -2,8 +2,9 @@ var express = require("express");
 var router = express.Router();
 
 router.all("/*", function(req, res, next) {
+    console.log(req.protocol);
     // if not secure
-    if (req.secure) {
+    if (req.protocol === "https") {
         next();
     } else {
         res.json({ status: -1, info: "请使用https协议访问API" });
