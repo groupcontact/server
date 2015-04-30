@@ -3,7 +3,7 @@ var router = express.Router();
 var user = require.main.require("./models").user;
 var cb = require.main.require("./lib/cb");
 var config = require.main.require("./lib/config");
-var aes = require.main.require("./lib/aes");
+var aes = require.main.require("./lib/aes-ios");
 var check = require.main.require("./lib/check").check;
 
 var GeneralCallback = cb.GeneralCallback;
