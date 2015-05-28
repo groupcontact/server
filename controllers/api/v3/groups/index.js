@@ -71,6 +71,19 @@ router.get("/:id/members", function(req, res) {
     group.member.list(id, new ListResultCallback(res, config.DEFAULT_KEY).callback);
 });
 
+// 测试
+router.get("/:id/members2", function(req, res) {
+    var id = req.params.id;
+
+    var msg = check({gid: id});
+    if (msg) {
+        res.json(aes.encrypt("[]", config.DEFAULT_KEY));
+        return;
+    }
+
+    group.member.list(id, new ListResultCallback(res, null, true).callback);
+});
+
 
 // TODO: 查询群组的meta信息
 router.get("/:id/meta", function(req, res) {
