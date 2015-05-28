@@ -71,7 +71,7 @@ router.get("/:id/members", function(req, res) {
     group.member.list(id, new ListResultCallback(res, config.DEFAULT_KEY).callback);
 });
 
-// 测试
+// 用拼音分隔好了的成员列表
 router.get("/:id/members2", function(req, res) {
     var id = req.params.id;
 
@@ -81,7 +81,7 @@ router.get("/:id/members2", function(req, res) {
         return;
     }
 
-    group.member.list(id, new ListResultCallback(res, null, true).callback);
+    group.member.list(id, new ListResultCallback(res, config.DEFAULT_KEY, true).callback);
 });
 
 

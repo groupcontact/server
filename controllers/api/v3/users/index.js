@@ -186,6 +186,21 @@ router.get("/:id/friends", function(req, res) {
     user.friend.list(id, new ListResultCallback(res, config.DEFAULT_KEY).callback);
 });
 
+// 用拼音分隔好了的朋友列表
+router.get("/:id/friends2", function(req, res) {
+    var id = req.params.id;
+
+    var msg = check({
+        uid: id
+    });
+    if (msg) {
+        res.json(aes.encrypt("[]", config.DEFAULT_KEY));
+        return;
+    }
+
+    user.friend.list(id, new ListResultCallback(res, config.DEFAULT_KEY, true).callback);
+});
+
 // 添加朋友
 router.post("/:id/friends", function(req, res) {
     var uid = req.params.id;
