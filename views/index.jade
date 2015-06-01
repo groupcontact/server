@@ -36,9 +36,15 @@ block content
             li 页面调整，更一致；
             li 注册需要设置密码，账号更为安全
 
-        script.
-            new QRCode(document.getElementById("qrcode"), $("#link").attr("href"));
-
         h2 iPhone客户端
 
-        div 敬请期待(预计发布日期2015.4)
+        #qrcode2
+        
+        h3 发布日志
+        
+        h4 v1.0(2015.6.1)
+            a(href="http://bj.bcebos.com/distapps/GroupContact_v1.0.ipa?responseContentDisposition=attachment" id="link2") 下载
+            
+        script.
+            new QRCode(document.getElementById("qrcode2"), $("#link2").attr("href"));
+            new QRCode(document.getElementById("qrcode"), $("#link").attr("href"));
